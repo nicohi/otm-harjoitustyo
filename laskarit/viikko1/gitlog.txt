@@ -1,0 +1,106 @@
+commit e3bf97dbb20528d8001759cdcaa7474b2dd6dba0
+Author: Nicolas Hiillos <nicolashiillos@gmail.com>
+Date:   Sun Mar 11 11:05:54 2018 +0200
+
+    poistettu file1, uudelleennimetty file2 -> file22
+
+ tiedostoja/file1  | 0
+ tiedostoja/file2  | 0
+ tiedostoja/file22 | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit e72ee38e626fe9876acf4a60ca7415593cf3db0e
+Author: Nicolas Hiillos <nicolashiillos@gmail.com>
+Date:   Sun Mar 11 10:33:51 2018 +0200
+
+    added files
+
+ tiedostoja/file1 | 0
+ tiedostoja/file2 | 0
+ tiedostoja/file3 | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit c272f955f64c18d11c811719e543d79c6dd17615
+Author: Nicolas Hiillos <nicolashiillos@gmail.com>
+Date:   Sun Mar 11 10:22:45 2018 +0200
+
+    jtn2
+
+ eka.txt    | 3 ++-
+ kolmas.txt | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+commit 88b983a12be6f75b03b350c602abf5c6196d667f
+Author: Nicolas Hiillos <nicolashiillos@gmail.com>
+Date:   Sun Mar 11 10:19:21 2018 +0200
+
+    jtn
+
+ eka.txt | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit f19aba4d59a4258727750f119b1eed68c247d834
+Author: Nicolas Hiillos <nicolashiillos@gmail.com>
+Date:   Sun Mar 11 10:19:10 2018 +0200
+
+    jtn
+
+ tiedosto.txt | 3 ---
+ toinen.txt   | 1 -
+ 2 files changed, 4 deletions(-)
+
+commit e5ce583e775c8b05a88828ee3010c475e1d7c91d
+Author: Nicolas Hiillos <nicolashiillos@gmail.com>
+Date:   Sun Mar 11 10:01:35 2018 +0200
+
+    poistettu vhän, lisätty vhän
+
+ tiedosto.txt | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+commit 4da784a1310384a9c615f5fd66eeb26a4babdbfd
+Author: Nicolas Hiillos <nicolashiillos@gmail.com>
+Date:   Sun Mar 11 10:00:09 2018 +0200
+
+    paljon tekstiä
+
+ tiedosto.txt | 3 +++
+ 1 file changed, 3 insertions(+)
+
+commit 913d39f6ceaa53e0a8cf618e148a6f1dbfc010e8
+Author: Nicolas Hiillos <nicolashiillos@gmail.com>
+Date:   Sun Mar 11 09:57:30 2018 +0200
+
+    muutoksia
+
+ kolmas.txt | 1 +
+ toinen.txt | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit a183815ed5b9f7f74dcadc910c4189d5cfc87af3
+Author: Nicolas Hiillos <nicolashiillos@gmail.com>
+Date:   Sun Mar 11 09:55:31 2018 +0200
+
+    lisäys
+
+ kolmas.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit aec0c6cbda60dbf7b4d415ef1416239dc7218a2c
+Author: Nicolas Hiillos <nicolashiillos@gmail.com>
+Date:   Sun Mar 11 09:12:38 2018 +0200
+
+    muutos ja lisäys
+
+ tiedosto.txt | 1 +
+ toinen.txt   | 0
+ 2 files changed, 1 insertion(+)
+
+commit 168869a2381e3d3fdf416b3dd557206768c6e865
+Author: Nicolas Hiillos <nicolashiillos@gmail.com>
+Date:   Sun Mar 11 09:10:39 2018 +0200
+
+    tiedosto.txt luotu
+
+ tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
