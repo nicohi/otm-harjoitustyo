@@ -15,7 +15,7 @@ public class Physics {
 
 		double d = Math.pow(Math.pow((p1X - p2X), 2) + Math.pow((p1Y - p2Y), 2) + Math.pow((p1Z - p2Z), 2), 1/2);
 		
-		double fieldStr = (bigG * p1.getM() * p2.getM())/(d*d);
+		double fieldStr = -1 * (bigG * p1.getM() * p2.getM())/(d*d);
 		
 		return vectorScalarProduct(fieldStr, new Vector(p1X - p2X, p1Y - p2Y, p1Z - p2Z));
 	}

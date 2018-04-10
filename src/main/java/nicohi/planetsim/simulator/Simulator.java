@@ -12,7 +12,7 @@ public class Simulator {
 
 	public Simulator() {
 		this.planets = new ArrayList<>();
-		this.tickTime = 100;
+		this.tickTime = 10;
 		this.phys = new Physics();
 	}
 
