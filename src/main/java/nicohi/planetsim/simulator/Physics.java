@@ -1,6 +1,7 @@
 package nicohi.planetsim.simulator;
 
 import java.util.ArrayList;
+import java.util.function.BinaryOperator;
 
 public class Physics {
 	final double bigG = (6.67408 / 1000000) / 100000;
@@ -54,5 +55,20 @@ public class Physics {
 	public Vector vectorSum(ArrayList<Vector> vs) {
 		return vs.stream().reduce(new Vector(), new VectorSum());
 	}
+
+}
+
+class VectorSum implements BinaryOperator {
+
+		@Override
+		public Vector apply(Object t, Object u) {
+			if (t instanceof Vector && u instanceof Vector) {
+				Vector one = (Vector) t;
+				Vector two = (Vector) u;
+				return new Vector(one.getX() + two.getX(), one.getY() + two.getY(), one.getZ() + one.getZ());
+			} else { 
+				return new Vector();
+			} 
+		}
 
 }

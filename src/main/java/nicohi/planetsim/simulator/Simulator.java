@@ -1,7 +1,6 @@
 package nicohi.planetsim.simulator;
 
 import java.util.ArrayList;
-import java.util.function.BinaryOperator;
 import java.util.stream.Collectors;
 
 public class Simulator {
@@ -54,19 +53,4 @@ public class Simulator {
 	}
 
 	
-}
-
-class VectorSum implements BinaryOperator {
-
-		@Override
-		public Vector apply(Object t, Object u) {
-			if (t instanceof Vector && u instanceof Vector) {
-				Vector one = (Vector) t;
-				Vector two = (Vector) u;
-				return new Vector(one.getX() + two.getX(), one.getY() + two.getY(), one.getZ() + one.getZ());
-			} else { 
-				return new Vector();
-			} 
-		}
-
 }
