@@ -6,7 +6,7 @@
 # Ohjeita
 ## lataaminen
 ```
-git clone
+git clone https://github.com/nicohi/otm-harjoitustyo
 cd otm-harjoitustyo
 ```
 ## suorittaminen
