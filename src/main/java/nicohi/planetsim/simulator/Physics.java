@@ -17,6 +17,7 @@ public class Physics {
 		double d = Math.pow(Math.pow((p1X - p2X), 2) + Math.pow((p1Y - p2Y), 2) + Math.pow((p1Z - p2Z), 2), 1/2);
 		
 		double fieldStr = -1 * (bigG * p1.getM() * p2.getM())/(d*d);
+		//double fieldStr = (bigG * p1.getM() * p2.getM())/(d*d);
 		
 		return vectorScalarProduct(fieldStr, new Vector(p1X - p2X, p1Y - p2Y, p1Z - p2Z));
 	}
@@ -53,22 +54,22 @@ public class Physics {
 	}
 
 	public Vector vectorSum(ArrayList<Vector> vs) {
-		return vs.stream().reduce(new Vector(), new VectorSum());
+		return vs.stream().reduce(new Vector(), (v1, v2) -> new Vector(v1.getX() + v2.getX(), v1.getY() + v2.getY(), v1.getZ() + v2.getZ()));
 	}
 
 }
 
-class VectorSum implements BinaryOperator {
-
-		@Override
-		public Vector apply(Object t, Object u) {
-			if (t instanceof Vector && u instanceof Vector) {
-				Vector one = (Vector) t;
-				Vector two = (Vector) u;
-				return new Vector(one.getX() + two.getX(), one.getY() + two.getY(), one.getZ() + one.getZ());
-			} else { 
-				return new Vector();
-			} 
-		}
-
-}
+//class VectorSum implements BinaryOperator {
+//
+//		@Override
+//		public Vector apply(Object t, Object u) {
+//			if (t instanceof Vector && u instanceof Vector) {
+//				Vector one = (Vector) t;
+//				Vector two = (Vector) u;
+//				return new Vector(one.getX() + two.getX(), one.getY() + two.getY(), one.getZ() + one.getZ());
+//			} else { 
+//				return new Vector();
+//			} 
+//		}
+//
+//}
