@@ -4,18 +4,22 @@ import java.util.ArrayList;
 import java.util.function.BinaryOperator;
 
 public class Physics {
-	final double bigG = (6.67408 / 1000000) / 100000;
+	final double bigG = (6.67408 / Math.pow(10, 11));
 
 	public Vector nGravF(Planet p1, Planet p2) {
+		//planet1 coords
 		double p1X = p1.getPos().getX();
 		double p1Y = p1.getPos().getY();
 		double p1Z = p1.getPos().getZ();
+		//planet2 coords
 		double p2X = p2.getPos().getX();
 		double p2Y = p2.getPos().getY();
 		double p2Z = p2.getPos().getZ();
 
+		//3D pythagoras 
 		double d = Math.pow(Math.pow((p1X - p2X), 2) + Math.pow((p1Y - p2Y), 2) + Math.pow((p1Z - p2Z), 2), 1/2);
 		
+		//-1 for 
 		double fieldStr = -1 * (bigG * p1.getM() * p2.getM())/(d*d);
 		//double fieldStr = (bigG * p1.getM() * p2.getM())/(d*d);
 		
@@ -23,7 +27,9 @@ public class Physics {
 	}
 
 	public Vector vectorScalarProduct(double s, Vector v) {
-		return new Vector(s * v.getX(), s * v.getY(), s * v.getZ());
+		return new Vector(s * v.getX(),
+				s * v.getY(),
+				s * v.getZ());
 	}
 
 	public Vector unitVector(Vector v1) {
@@ -48,28 +54,17 @@ public class Physics {
 	}
 
 	public Vector vectorSum(Vector v1, Vector v2) {
-		return new Vector(v1.getX() + v2.getX(), 
+		return new Vector(
+				v1.getX() + v2.getX(), 
 				v1.getY() + v2.getY(), 
 				v1.getZ() + v2.getZ());
 	}
 
 	public Vector vectorSum(ArrayList<Vector> vs) {
-		return vs.stream().reduce(new Vector(), (v1, v2) -> new Vector(v1.getX() + v2.getX(), v1.getY() + v2.getY(), v1.getZ() + v2.getZ()));
+		return vs.stream().reduce(new Vector(), (v1, v2) -> new Vector(
+				v1.getX() + v2.getX(), 
+				v1.getY() + v2.getY(),
+				v1.getZ() + v2.getZ()));
 	}
 
 }
-
-//class VectorSum implements BinaryOperator {
-//
-//		@Override
-//		public Vector apply(Object t, Object u) {
-//			if (t instanceof Vector && u instanceof Vector) {
-//				Vector one = (Vector) t;
-//				Vector two = (Vector) u;
-//				return new Vector(one.getX() + two.getX(), one.getY() + two.getY(), one.getZ() + one.getZ());
-//			} else { 
-//				return new Vector();
-//			} 
-//		}
-//
-//}
