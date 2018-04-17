@@ -18,7 +18,7 @@ public class Simulator {
 	public void tick() {
 		planets.stream().forEach(p -> p.setVel(newVel(p, planets)));
 		planets.stream().forEach(p -> p.setPos(newPos(p)));
-		planets.stream().forEach(p -> System.out.println(p));
+		//planets.stream().forEach(p -> System.out.println(p));
 	}
 
 	public Vector newVel(Planet p, ArrayList<Planet> ps) {

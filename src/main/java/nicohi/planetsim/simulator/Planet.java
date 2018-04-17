@@ -22,6 +22,10 @@ public class Planet {
 		this.name = new RandomStringGenerator().generateString();
     }
 
+	public double radius() {
+		return Math.log(m);
+	}
+
 	@Override
 	public String toString() {
 		return "Planet{" + "name=" + name + ", m=" + m + ", pos=" + pos + ", vel=" + vel + '}';
