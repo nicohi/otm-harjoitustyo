@@ -28,6 +28,10 @@ public class Vector {
 	}
 
 
+//	public double getMag() {
+//		return Math.abs(Math.pow(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2), 1.0 / 2));
+//	}
+
 	public double getX() {
 		return x;
 	}

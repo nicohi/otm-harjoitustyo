@@ -21,12 +21,17 @@ public class Simulator {
 		//planets.stream().forEach(p -> System.out.println(p));
 	}
 
+	//sets netF of p
 	public Vector newVel(Planet p, ArrayList<Planet> ps) {
 		ArrayList<Vector> fs = ps.stream()
-				.filter(p2 -> !(p2.equals(p)))
-				.map(p2 -> phys.nGravF(p, p2))
-				.collect(Collectors.toCollection(ArrayList<Vector>::new));
-		return phys.vectorSum(p.getVel(), phys.vectorScalarProduct(tickTime, phys.vectorScalarProduct(1/p.getM(), phys.vectorSum(fs))));
+						.filter(p2 -> !(p2.equals(p)))
+						.map(p2 -> phys.nGravF(p, p2))
+						.collect(Collectors.toCollection(ArrayList<Vector>::new));
+		Vector netF = phys.vectorSum(fs);
+		p.setNetF(netF);
+		Vector acc = phys.vectorScalarProduct(1.0 / p.getM(), netF);
+		p.setAcc(acc);
+		return phys.vectorSum(p.getVel(), phys.vectorScalarProduct(tickTime / p.getM(), netF));
 	}
 
 	public Vector newPos(Planet p) {

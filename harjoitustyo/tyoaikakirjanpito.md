@@ -6,4 +6,5 @@
 | 9.4. | 1    | maven projektin luonti |
 | 10.4. | 4    | planeettojen luonti ja simulaattori (saattaa toimia oikein) |
 | 16.4. | 6 | osa vk4 asioista |
-| yht   | 13  | | 
+| 17.4. | 7 | lisää vk4 asioita |
+| yht   | 20  | | 
