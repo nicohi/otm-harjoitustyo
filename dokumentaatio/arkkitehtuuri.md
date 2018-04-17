@@ -1,1 +1,1 @@
-![dia1](dokumentaatio/dia1.png?raw=true)
+![dia1](dia1.png?raw=true)
