@@ -3,6 +3,8 @@
 
 [työaikakirjanpito](https://github.com/nicohi/otm-harjoitustyo/blob/master/harjoitustyo/tyoaikakirjanpito.md)
 
+[arkkitehtuuri](dokumentaatio/arkkitehtuuri.md)
+
 # Ohjeita
 ## lataaminen
 ```
