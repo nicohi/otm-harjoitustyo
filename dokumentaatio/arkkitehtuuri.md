@@ -1,1 +1,1 @@
-![alt text](https://github.com/nicohi/otm-harjoitustyo/tree/master/dokumentaatio/dia1.png "dia1")
+![dia1](https://github.com/nicohi/otm-harjoitustyo/tree/master/dokumentaatio/dia1.png?raw=true)
