@@ -1,7 +1,11 @@
 # planetsim
-Javalla ohjelmoitu [n-kappale](https://en.wikipedia.org/wiki/N-body_simulation) simulaattori.
+Javalla ohjelmoitu [n-kappale](https://en.wikipedia.org/wiki/N-body_simulation) simulaattori. 
+Painovoima on mallinnettu mahdollisimman realistisesti. 
+Planeettojen kiihtyvyydet ja liikkumiset lasketaan samaan aikaan jollain aikavälillä. 
+Pienentämällä aikaväliä simulaatiosta voi tehdä tarkemman.
 
 
+##linkkejä
 [määrittely](https://github.com/nicohi/otm-harjoitustyo/blob/master/harjoitustyo/outline.md)
 
 [työaikakirjanpito](https://github.com/nicohi/otm-harjoitustyo/blob/master/harjoitustyo/tyoaikakirjanpito.md)
