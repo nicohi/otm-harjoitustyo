@@ -7,4 +7,5 @@
 | 10.4. | 4    | planeettojen luonti ja simulaattori (saattaa toimia oikein) |
 | 16.4. | 6 | osa vk4 asioista |
 | 17.4. | 7 | lisää vk4 asioita |
-| yht   | 20  | | 
+| 24.4. | 3 | korjauksia ja testikattavuutta |
+| yht   | 23  | | 
