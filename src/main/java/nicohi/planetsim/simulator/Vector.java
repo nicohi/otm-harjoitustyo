@@ -24,7 +24,7 @@ public class Vector {
 
 	@Override
 	public String toString() {
-		return "Vector{" + "x=" + x + ", y=" + y + '}';
+		return "Vector{" + "x=" + x + ", y=" + y + ", z=" + z + '}';
 	}
 
 
