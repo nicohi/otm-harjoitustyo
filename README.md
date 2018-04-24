@@ -1,11 +1,12 @@
 # planetsim
 Javalla ohjelmoitu [n-kappale](https://en.wikipedia.org/wiki/N-body_simulation) simulaattori. 
 Painovoima on mallinnettu mahdollisimman realistisesti. 
-Planeettojen kiihtyvyydet ja liikkumiset lasketaan samaan aikaan jollain aikavälillä. 
-Pienentämällä aikaväliä simulaatiosta voi tehdä tarkemman.
+Planeettojen kiihtyvyydet ja liikkumiset lasketaan samaan aikaan jollain aikavälillä.
 
 
 ## linkkejä
+[uusin release](releases/tag/viikko5)
+
 [määrittely](https://github.com/nicohi/otm-harjoitustyo/blob/master/harjoitustyo/outline.md)
 
 [työaikakirjanpito](https://github.com/nicohi/otm-harjoitustyo/blob/master/harjoitustyo/tyoaikakirjanpito.md)
@@ -13,15 +14,18 @@ Pienentämällä aikaväliä simulaatiosta voi tehdä tarkemman.
 [arkkitehtuuri](dokumentaatio/arkkitehtuuri.md)
 
 # ohjeita
-## lataaminen
+## lataaminen ja suorittaminen
+Joko lataa ja suorita [uusin jar tiedosto](releases/) komenolla
+```
+java -jar planetsim.jar
+```
+tai jos haluat kasata itse lähdekoodista
 ```
 git clone https://github.com/nicohi/otm-harjoitustyo
 cd otm-harjoitustyo
-```
-## suorittaminen
-```
 mvn compile exec:java -Dexec.mainClass=nicohi.planetsim.Main
 ```
+# muita ohjeita
 ## luo .jar tiedosto kansioon target/
 ```
 mvn package
