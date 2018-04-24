@@ -20,8 +20,8 @@ import nicohi.planetsim.simulator.Vector;
 
 public class UserInterface extends Application {
 	Simulator sim;
-	AnimationTimer simLoop;
-	double prev = 0;
+	StatusTimer simLoop;
+	long prev = 0;
 	Scene scene;
 	int width = 900;
 	int height = 900;
@@ -32,10 +32,23 @@ public class UserInterface extends Application {
         launch(args);
     }
 
+	public Button pauseBtn() {
+		Button btn = new Button("pause/unpause");
+		btn.setOnAction(new EventHandler<ActionEvent>() {
+ 
+            @Override
+            public void handle(ActionEvent event) {
+				toggleTimer();
+            }
+        });
+		return btn;
+	}
+
+
 	private void startSim() {
 
         // start sim
-        simLoop = new AnimationTimer() {
+        simLoop = new StatusTimer() {
 
             @Override
             public void handle(long now) {
@@ -59,8 +72,8 @@ public class UserInterface extends Application {
 							.forEach(p -> {
 								p.resetPos(xCenter, yCenter, 10000);
 							});
+					prev = now;
 				}	
-				prev = now;
             }
         };
 
@@ -68,21 +81,25 @@ public class UserInterface extends Application {
 
     }
 
-	private void stopSim() {
+	private void stopTimer() {
 		simLoop.stop();
+	}
+
+	private void toggleTimer() {
+		if(simLoop.isRunning()) simLoop.stop();
+		else simLoop.start();
 	}
 
     @Override
     public void start(Stage primaryStage) {
 		this.sim = new Simulator();
 		sim.getPlanets().add(new Planet(10000000000.0));
-		sim.getPlanets().add(new Planet(new Vector(100, 0), new Vector(0, -0.5), 100));
-		sim.getPlanets().add(new Planet(new Vector(50, 0), new Vector(0.2, 1.6), 100));
+		sim.getPlanets().add(new Planet(new Vector(100, 0), new Vector(0, -0.5), 1000000));
+		sim.getPlanets().add(new Planet(new Vector(150, 30), new Vector(0, -0.8), 1000000000));
+		sim.getPlanets().add(new Planet(new Vector(55, 0), new Vector(0.2, 1.6), 100000000));
 
 		// create containers
         BorderPane root = new BorderPane();
-
-        // playfield for our Sprites
 
         // entire game as layers
         canvas = new Pane();
@@ -95,23 +112,44 @@ public class UserInterface extends Application {
 			UIPlanet pN = new UIPlanet(p);
 			canvas.getChildren().add(pN);
 			//canvas.getChildren().addAll(pN.getA(), pN.getF(), pN.getV());
-			//canvas.getChildren().addAll(pN.getV());
-			//canvas.getChildren().addAll(pN.getA());
-			canvas.getChildren().addAll(pN.getF());
+			canvas.getChildren().addAll(pN.getV());
+			canvas.getChildren().addAll(pN.getA());
+			//canvas.getChildren().addAll(pN.getF());
 		});
 
         //layerPane.getChildren().addAll(playfield);
 		//canvas.getChildren().addAll(circle);
         root.setCenter(canvas);
+		root.setBottom(pauseBtn());
 
         scene = new Scene(root, width, height);
 
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        // run animation loop
         startSim();
     }		
+}
+
+abstract class StatusTimer extends AnimationTimer {
+
+    private volatile boolean running;
+
+    @Override
+    public void start() {
+         super.start();
+         running = true;
+    }
+
+    @Override
+    public void stop() {
+        super.stop();
+        running = false;
+    }
+
+    public boolean isRunning() {
+        return running;
+    }
 }
 
 class UIVector extends Line {
@@ -136,7 +174,7 @@ class UIVector extends Line {
 
 	@Override
 	public String toString() {
-		return v.toString(); //To change body of generated methods, choose Tools | Templates.
+		return v.toString();
 	}
 
 	public void setV(Vector v) {
@@ -150,8 +188,6 @@ class UIPlanet extends Circle {
 	UIVector v;
 	UIVector a;
 	UIVector f;
-	//int center = 250;
-	//Circle c;
 
 	public UIPlanet(Planet p) {
 		super(p.radius(), Color.CRIMSON);
@@ -177,10 +213,10 @@ class UIPlanet extends Circle {
 		this.setCenterY(y);
 
 		this.v.setV(this.p.getVel());
-		this.v.resetPos(x, y, 10);
+		this.v.resetPos(x, y, 100);
 
 		this.a.setV(this.p.getAcc());
-		this.a.resetPos(x, y, 100);
+		this.a.resetPos(x, y, 10000);
 
 		this.f.setV(this.p.getNetF());
 		this.f.resetPos(x, y, 0.001);
