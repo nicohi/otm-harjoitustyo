@@ -8,4 +8,5 @@
 | 16.4. | 6 | osa vk4 asioista |
 | 17.4. | 7 | lisää vk4 asioita |
 | 24.4. | 3 | korjauksia ja testikattavuutta |
-| yht   | 23  | | 
+| 24.4. | 2 | käyttöliittymä pause nappi, osa planeetan lisäykseen liittyvää käyttöliittymää |
+| yht   | 25  | | 

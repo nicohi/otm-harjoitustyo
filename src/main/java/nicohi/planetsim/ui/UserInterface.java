@@ -1,15 +1,22 @@
 package nicohi.planetsim.ui;
 
+import com.sun.javafx.scene.control.skin.DatePickerContent;
 import com.sun.scenario.Settings;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -26,7 +33,7 @@ public class UserInterface extends Application {
 	int width = 900;
 	int height = 900;
 	Pane canvas;
-	
+	VBox rMenu;
 
 	public static void main(String[] args) {
         launch(args);
@@ -43,7 +50,29 @@ public class UserInterface extends Application {
         });
 		return btn;
 	}
-
+	
+	public VBox vectorSetBox(String t) {
+		VBox b = new VBox();
+		b.getChildren().add(new Label(t));
+		b.getChildren().add(numericFieldAndLabel("x: "));
+		b.getChildren().add(numericFieldAndLabel("y: "));
+		return b;
+	}
+	
+	public HBox numericFieldAndLabel(String l) {
+		TextField txt = new TextField();
+		// force the field to be numeric only
+		txt.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue,
+					String newValue) {
+				//if (!newValue.matches("\\d*") && !newValue.matches("\\[-]d*")) {
+					//txt.setText(newValue.replaceAll("[^\\d]", ""));
+				//}
+			}
+		});
+		return new HBox(new Label(l), txt);
+	}
 
 	private void startSim() {
 
@@ -89,39 +118,66 @@ public class UserInterface extends Application {
 		if(simLoop.isRunning()) simLoop.stop();
 		else simLoop.start();
 	}
+	
+	public Button addPlanetButton() {
+		Button b = new Button("add planet");
+		return b;
+	}
+	
+	public void addPlanet(Planet p) {
+		sim.getPlanets().add(p);
+		UIPlanet pN = new UIPlanet(p);
+		canvas.getChildren().add(pN);
+		//canvas.getChildren().addAll(pN.getA(), pN.getF(), pN.getV());
+		canvas.getChildren().addAll(pN.getV());
+		canvas.getChildren().addAll(pN.getA());
+	}
 
     @Override
     public void start(Stage primaryStage) {
+        // layers
+        canvas = new Pane();
+
 		this.sim = new Simulator();
-		sim.getPlanets().add(new Planet(10000000000.0));
-		sim.getPlanets().add(new Planet(new Vector(100, 0), new Vector(0, -0.5), 1000000));
-		sim.getPlanets().add(new Planet(new Vector(150, 30), new Vector(0, -0.8), 1000000000));
-		sim.getPlanets().add(new Planet(new Vector(55, 0), new Vector(0.2, 1.6), 100000000));
+		//sim.getPlanets().add(new Planet(10000000000.0));
+		addPlanet(new Planet(10000000000.0));
+		//sim.getPlanets().add(new Planet(new Vector(100, 0), new Vector(0, -0.5), 1000000));
+		addPlanet(new Planet(new Vector(100, 0), new Vector(0, -0.5), 1000000));
+		//sim.getPlanets().add(new Planet(new Vector(150, 30), new Vector(0, -0.8), 1000000000));
+		addPlanet(new Planet(new Vector(150, 30), new Vector(0, -0.8), 1000000000));
+		//sim.getPlanets().add(new Planet(new Vector(55, 0), new Vector(0.2, 1.6), 100000000));
+		addPlanet(new Planet(new Vector(55, 0), new Vector(0.2, 1.6), 100000000));
 
 		// create containers
         BorderPane root = new BorderPane();
 
-        // entire game as layers
-        canvas = new Pane();
+		//right menu
+		rMenu = new VBox();
+		rMenu.getChildren().add(vectorSetBox("position"));
+		rMenu.getChildren().add(vectorSetBox("velocity"));
+		rMenu.getChildren().add(numericFieldAndLabel("mass: "));
+		rMenu.getChildren().add(addPlanetButton());
 
 		//test circle
 		Circle circle = new Circle(50, Color.BLUE);
 		circle.relocate(200, 200);
 
-		this.sim.getPlanets().forEach(p -> {
-			UIPlanet pN = new UIPlanet(p);
-			canvas.getChildren().add(pN);
+		//this.sim.getPlanets().forEach(p -> {
+			//UIPlanet pN = new UIPlanet(p);
+			//canvas.getChildren().add(pN);
 			//canvas.getChildren().addAll(pN.getA(), pN.getF(), pN.getV());
-			canvas.getChildren().addAll(pN.getV());
-			canvas.getChildren().addAll(pN.getA());
+			//canvas.getChildren().addAll(pN.getV());
+			//canvas.getChildren().addAll(pN.getA());
 			//canvas.getChildren().addAll(pN.getF());
-		});
+		//});
 
         //layerPane.getChildren().addAll(playfield);
 		//canvas.getChildren().addAll(circle);
-        root.setCenter(canvas);
+        root.setLeft(canvas);
 		root.setBottom(pauseBtn());
 
+		root.setRight(rMenu);
+		
         scene = new Scene(root, width, height);
 
         primaryStage.setScene(scene);
@@ -129,6 +185,10 @@ public class UserInterface extends Application {
 
         startSim();
     }		
+}
+
+class PlanetAddMenu extends VBox {
+	
 }
 
 abstract class StatusTimer extends AnimationTimer {
