@@ -30,7 +30,7 @@ public class Planet {
     }
 
 	public double radius() {
-		return Math.log(m);
+		return Math.log10(m);
 	}
 
 	public void setAcc(Vector acc) {

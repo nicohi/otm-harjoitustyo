@@ -31,7 +31,7 @@
                 <configuration>
                     <excludes>
                         <exclude>nicohi/planetsim/ui/*</exclude>
-                        <exclude>nicohi/planetsim/Main.java</exclude>
+                        <exclude>**/*Main.*</exclude>
                     </excludes>
                 </configuration> 
                 <executions>
