@@ -12,7 +12,7 @@ Pienentämällä aikaväliä simulaatiosta voi tehdä tarkemman.
 
 [arkkitehtuuri](dokumentaatio/arkkitehtuuri.md)
 
-# Ohjeita
+# ohjeita
 ## lataaminen
 ```
 git clone https://github.com/nicohi/otm-harjoitustyo
