@@ -1,4 +1,7 @@
 # planetsim
+Javalla ohjelmoitu [n-kappale](https://en.wikipedia.org/wiki/N-body_simulation) simulaattori.
+
+
 [määrittely](https://github.com/nicohi/otm-harjoitustyo/blob/master/harjoitustyo/outline.md)
 
 [työaikakirjanpito](https://github.com/nicohi/otm-harjoitustyo/blob/master/harjoitustyo/tyoaikakirjanpito.md)
@@ -14,6 +17,10 @@ cd otm-harjoitustyo
 ## suorittaminen
 ```
 mvn compile exec:java -Dexec.mainClass=nicohi.planetsim.Main
+```
+## luo .jar tiedosto kansioon target/
+```
+mvn package
 ```
 ## testaus
 ```
