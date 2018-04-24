@@ -5,7 +5,7 @@ Planeettojen kiihtyvyydet ja liikkumiset lasketaan samaan aikaan jollain aikavä
 
 
 ## linkkejä
-[uusin release](releases/)
+[uusin release](https://github.com/nicohi/otm-harjoitustyo/releases/)
 
 [määrittely](https://github.com/nicohi/otm-harjoitustyo/blob/master/harjoitustyo/outline.md)
 
