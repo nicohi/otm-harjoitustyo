@@ -5,7 +5,7 @@ Planeettojen kiihtyvyydet ja liikkumiset lasketaan samaan aikaan jollain aikavä
 Pienentämällä aikaväliä simulaatiosta voi tehdä tarkemman.
 
 
-##linkkejä
+## linkkejä
 [määrittely](https://github.com/nicohi/otm-harjoitustyo/blob/master/harjoitustyo/outline.md)
 
 [työaikakirjanpito](https://github.com/nicohi/otm-harjoitustyo/blob/master/harjoitustyo/tyoaikakirjanpito.md)
