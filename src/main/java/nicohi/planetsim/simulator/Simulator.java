@@ -11,7 +11,7 @@ public class Simulator {
 
 	public Simulator() {
 		this.planets = new ArrayList<>();
-		this.tickTime = 2;
+		this.tickTime = 5;
 		this.phys = new Physics();
 	}
 
@@ -61,6 +61,5 @@ public class Simulator {
 	public void setTickTime(double tickTime) {
 		this.tickTime = tickTime;
 	}
-
 	
 }

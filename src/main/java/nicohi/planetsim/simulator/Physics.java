@@ -3,10 +3,21 @@ package nicohi.planetsim.simulator;
 import java.util.ArrayList;
 import java.util.function.BinaryOperator;
 
+/**
+ *
+ * @author Nicolas Hiillos
+ */
 public class Physics {
 	//final double bigG = (6.67408 / Math.pow(10, 11));
 	final double bigG = (6.67408 / Math.pow(10, 11));
 
+	/**
+	 * Calculates the gravitational force between 2 planets as a vector.
+	 * 
+	 * @param Planet 1
+	 * @param Planet 2
+	 * @return Vector of gravitational force experienced by p1
+	 */
 	public Vector nGravF(Planet p1, Planet p2) {
 		//planet1 coords
 		double p1X = p1.getPos().getX();
@@ -23,15 +34,26 @@ public class Physics {
 		double fieldStr = (bigG * p1.getM() * p2.getM()) / (d * d);
 		//double fieldStr = (bigG * p1.getM() * p2.getM())/(d*d);
 		
-		return vectorScalarProduct(fieldStr, new Vector(p2X - p1X, p2Y - p1Y, p2Z - p1Z));
+		return vectorScalarProduct(fieldStr, unitVector(new Vector(p2X - p1X, p2Y - p1Y, p2Z - p1Z)));
 	}
 
+	/**
+	 * Multiplies all components of a vector by a double
+	 * @param s
+	 * @param v
+	 * @return
+	 */
 	public Vector vectorScalarProduct(double s, Vector v) {
 		return new Vector(s * v.getX(),
 				s * v.getY(),
 				s * v.getZ());
 	}
 
+	/**
+	 *
+	 * @param v1
+	 * @return
+	 */
 	public Vector unitVector(Vector v1) {
 		double p1X = v1.getX();
 		double p1Y = v1.getY();
@@ -41,6 +63,12 @@ public class Physics {
 		return new Vector(p1X / mag, p1Y / mag, p1Z / mag);
 	}
 
+	/**
+	 *
+	 * @param v1
+	 * @param v2
+	 * @return
+	 */
 	public Vector vectorSum(Vector v1, Vector v2) {
 		return new Vector(
 				v1.getX() + v2.getX(), 
@@ -48,6 +76,11 @@ public class Physics {
 				v1.getZ() + v2.getZ());
 	}
 
+	/**
+	 *
+	 * @param vs
+	 * @return
+	 */
 	public Vector vectorSum(ArrayList<Vector> vs) {
 		return vs.stream().reduce(new Vector(), (v1, v2) -> new Vector(
 				v1.getX() + v2.getX(), 

@@ -140,13 +140,14 @@ public class UserInterface extends Application {
 
 		this.sim = new Simulator();
 		//sim.getPlanets().add(new Planet(10000000000.0));
-		addPlanet(new Planet(10000000000.0));
+		addPlanet(new Planet(100000000000.0));
+		addPlanet(new Planet(new Vector(100,0), new Vector(0, 0.3), 1000000000.0));
+		addPlanet(new Planet(new Vector(120,0), new Vector(0, 0.23), 1000000.0));
 		//sim.getPlanets().add(new Planet(new Vector(100, 0), new Vector(0, -0.5), 1000000));
-		addPlanet(new Planet(new Vector(100, 0), new Vector(0, -0.5), 1000000));
+		//addPlanet(new Planet(new Vector(100, 0), new Vector(0, -0.5), 100000));
 		//sim.getPlanets().add(new Planet(new Vector(150, 30), new Vector(0, -0.8), 1000000000));
-		addPlanet(new Planet(new Vector(150, 30), new Vector(0, -0.8), 1000000000));
+		//addPlanet(new Planet(new Vector(150, 30), new Vector(0, -0.8), 1000000));
 		//sim.getPlanets().add(new Planet(new Vector(55, 0), new Vector(0.2, 1.6), 100000000));
-		addPlanet(new Planet(new Vector(55, 0), new Vector(0.2, 1.6), 100000000));
 
 		// create containers
         BorderPane root = new BorderPane();
