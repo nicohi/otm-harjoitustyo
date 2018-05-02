@@ -16,22 +16,27 @@ public class Simulator {
 	}
 
 	public void tick() {
-		planets.stream().forEach(p -> p.setVel(newVel(p, planets)));
+		planets.stream().forEach(p -> p.setNetF(newNetF(p, planets)));
+		planets.stream().forEach(p -> p.setAcc(newAcc(p)));
+		planets.stream().forEach(p -> p.setVel(newVel(p)));
 		planets.stream().forEach(p -> p.setPos(newPos(p)));
 		//planets.stream().forEach(p -> System.out.println(p));
 	}
 
-	//sets netF of p
-	public Vector newVel(Planet p, ArrayList<Planet> ps) {
+	public Vector newNetF(Planet p, ArrayList<Planet> ps) {
 		ArrayList<Vector> fs = ps.stream()
 						.filter(p2 -> !(p2.equals(p)))
 						.map(p2 -> phys.nGravF(p, p2))
 						.collect(Collectors.toCollection(ArrayList<Vector>::new));
-		Vector netF = phys.vectorSum(fs);
-		p.setNetF(netF);
-		Vector acc = phys.vectorScalarProduct(1.0 / p.getM(), netF);
-		p.setAcc(acc);
-		return phys.vectorSum(p.getVel(), phys.vectorScalarProduct(tickTime / p.getM(), netF));
+		return phys.vectorSum(fs);
+	}
+
+	public Vector newAcc(Planet p) {
+		return phys.vectorScalarProduct(1.0 / p.getM(), p.getNetF());
+	}
+	
+	public Vector newVel(Planet p) {
+		return phys.vectorSum(p.getVel(), phys.vectorScalarProduct(tickTime / p.getM(), p.getNetF()));
 	}
 
 	public Vector newPos(Planet p) {
