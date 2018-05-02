@@ -14,8 +14,8 @@ public class Physics {
 	/**
 	 * Calculates the gravitational force between 2 planets as a vector.
 	 * 
-	 * @param Planet 1
-	 * @param Planet 2
+	 * @param p1 planet 1. Force calculated from this planets perspective.
+	 * @param p2 planet 2
 	 * @return Vector of gravitational force experienced by p1
 	 */
 	public Vector nGravF(Planet p1, Planet p2) {
@@ -39,9 +39,9 @@ public class Physics {
 
 	/**
 	 * Multiplies all components of a vector by a double
-	 * @param s
-	 * @param v
-	 * @return
+	 * @param s scalar
+	 * @param v vector
+	 * @return A vector with (x,y,z) multiplied by s.
 	 */
 	public Vector vectorScalarProduct(double s, Vector v) {
 		return new Vector(s * v.getX(),
@@ -51,8 +51,8 @@ public class Physics {
 
 	/**
 	 *
-	 * @param v1
-	 * @return
+	 * @param v1 vector
+	 * @return The unit vector of v1
 	 */
 	public Vector unitVector(Vector v1) {
 		double p1X = v1.getX();
@@ -65,9 +65,9 @@ public class Physics {
 
 	/**
 	 *
-	 * @param v1
-	 * @param v2
-	 * @return
+	 * @param v1 vector 1
+	 * @param v2 vector 2
+	 * @return The sum of the two vectors
 	 */
 	public Vector vectorSum(Vector v1, Vector v2) {
 		return new Vector(
@@ -78,8 +78,8 @@ public class Physics {
 
 	/**
 	 *
-	 * @param vs
-	 * @return
+	 * @param vs list of vectors
+	 * @return The sum of the list of vectors.
 	 */
 	public Vector vectorSum(ArrayList<Vector> vs) {
 		return vs.stream().reduce(new Vector(), (v1, v2) -> new Vector(

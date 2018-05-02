@@ -17,7 +17,7 @@ public class Planet {
 
 	/**
 	 * Sets velocity and position to parameterless vectors (0,0). Planet name is random
-	 * @param m
+	 * @param m mass
 	 */
 	public Planet(double m) {
         this.pos = new Vector();
@@ -30,9 +30,9 @@ public class Planet {
 
 	/**
 	 * Planet name is random 
-	 * @param pos
-	 * @param m
-	 * @param vel
+	 * @param pos position
+	 * @param m mass
+	 * @param vel velocity
 	 */
 	public Planet(Vector pos, Vector vel, double m) {
         this.pos = pos;
@@ -45,7 +45,7 @@ public class Planet {
 
 	/**
 	 * Calculates a radius for the planet (double) based on mass
-	 * @return
+	 * @return radius
 	 */
 	public double radius() {
 		return Math.log10(m);
@@ -53,7 +53,7 @@ public class Planet {
 
 	/**
 	 *
-	 * @param acc
+	 * @param acc acceleration
 	 */
 	public void setAcc(Vector acc) {
 		this.acc = acc;
@@ -61,7 +61,7 @@ public class Planet {
 
 	/**
 	 *
-	 * @return
+	 * @return acceleration
 	 */
 	public Vector getAcc() {
 		return acc;
@@ -69,7 +69,7 @@ public class Planet {
 
 	/**
 	 *
-	 * @param netF
+	 * @param netF net force
 	 */
 	public void setNetF(Vector netF) {
 		this.netF = netF;
@@ -77,7 +77,7 @@ public class Planet {
 
 	/**
 	 *
-	 * @return
+	 * @return net force
 	 */
 	public Vector getNetF() {
 		return netF;
@@ -119,7 +119,7 @@ public class Planet {
 
 	/**
 	 *
-	 * @return
+	 * @return position
 	 */
 	public Vector getPos() {
 		return pos;
@@ -127,7 +127,7 @@ public class Planet {
 
 	/**
 	 *
-	 * @param pos
+	 * @param pos position
 	 */
 	public void setPos(Vector pos) {
 		this.pos = pos;
@@ -135,7 +135,7 @@ public class Planet {
 
 	/**
 	 *
-	 * @return
+	 * @return velocity
 	 */
 	public Vector getVel() {
 		return vel;
@@ -143,7 +143,7 @@ public class Planet {
 
 	/**
 	 *
-	 * @param vel
+	 * @param vel velocity
 	 */
 	public void setVel(Vector vel) {
 		this.vel = vel;
@@ -151,7 +151,7 @@ public class Planet {
 
 	/**
 	 *
-	 * @return
+	 * @return mass
 	 */
 	public double getM() {
 		return m;
@@ -159,7 +159,7 @@ public class Planet {
 
 	/**
 	 *
-	 * @param m
+	 * @param m mass
 	 */
 	public void setM(double m) {
 		this.m = m;
@@ -167,7 +167,7 @@ public class Planet {
 
 	/**
 	 *
-	 * @return
+	 * @return name
 	 */
 	public String getName() {
 		return name;
@@ -175,7 +175,7 @@ public class Planet {
 
 	/**
 	 *
-	 * @param name
+	 * @param name name
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -183,7 +183,7 @@ public class Planet {
 
 	/**
 	 * Compares this planets mass to another planet
-	 * @param p2
+	 * @param p2 Planet 2
 	 * @return 0 if masses are equal. 1 if this planet is heavier. -1 if Planet 2 is heavier
 	 */
 	public int heavier(Planet p2) {

@@ -35,8 +35,8 @@ public class Simulator {
 
 	/**
 	 * Calculates net force experienced by a planet from all planets.
-	 * @param p
-	 * @param ps
+	 * @param p planet
+	 * @param ps list of planets
 	 * @return Net force for planet.
 	 */
 	public Vector newNetF(Planet p, ArrayList<Planet> ps) {
@@ -49,7 +49,7 @@ public class Simulator {
 
 	/**
 	 * Calculates acceleration vector for planet
-	 * @param p
+	 * @param p planet
 	 * @return New acceleration for planet based on current net force
 	 */
 	public Vector newAcc(Planet p) {
@@ -59,7 +59,7 @@ public class Simulator {
 	/**
 	 * Calculates new velocity vector for planet based on its mass and current net force.
 	 * 
-	 * @param p
+	 * @param p planet
 	 * @return New velocity vector for planet
 	 */
 	public Vector newVel(Planet p) {
@@ -69,7 +69,7 @@ public class Simulator {
 	/**
 	 * Calculates new position vector for planet based on its current position, velocity and the ticktime of the simulator
 	 * 
-	 * @param p
+	 * @param p planet
 	 * @return New position vector (after tickTime amount of time)
 	 */
 	public Vector newPos(Planet p) {
@@ -81,7 +81,7 @@ public class Simulator {
 
 	/**
 	 *
-	 * @return
+	 * @return planets
 	 */
 	public ArrayList<Planet> getPlanets() {
 		return planets;
@@ -89,7 +89,7 @@ public class Simulator {
 
 	/**
 	 *
-	 * @param planets
+	 * @param planets list of planets
 	 */
 	public void setPlanets(ArrayList<Planet> planets) {
 		this.planets = planets;
@@ -97,7 +97,7 @@ public class Simulator {
 
 	/**
 	 *
-	 * @return
+	 * @return ticktime
 	 */
 	public double getTickTime() {
 		return tickTime;
@@ -105,7 +105,7 @@ public class Simulator {
 
 	/**
 	 *
-	 * @param tickTime
+	 * @param tickTime time for of one simulation tick
 	 */
 	public void setTickTime(double tickTime) {
 		this.tickTime = tickTime;

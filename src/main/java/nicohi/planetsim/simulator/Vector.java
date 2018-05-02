@@ -20,8 +20,8 @@ public class Vector {
 
 	/**
 	 * Creates new vector (x,y,0)
-	 * @param x
-	 * @param y
+	 * @param x x
+	 * @param y y
 	 */
 	public Vector(double x, double y) {
         this.x = x;
@@ -31,9 +31,9 @@ public class Vector {
 
 	/**
 	 * Creates new vector (x,y,z)
-	 * @param x
-	 * @param y
-	 * @param z
+	 * @param x x
+	 * @param y y
+	 * @param z z
 	 */
 	public Vector(double x, double y, double z) {
         this.x = x;
@@ -48,7 +48,7 @@ public class Vector {
 
 	/**
 	 *
-	 * @return
+	 * @return x
 	 */
 	public double getX() {
 		return x;
@@ -56,7 +56,7 @@ public class Vector {
 
 	/**
 	 *
-	 * @param x
+	 * @param x x
 	 */
 	public void setX(double x) {
 		this.x = x;
@@ -64,7 +64,7 @@ public class Vector {
 
 	/**
 	 *
-	 * @return
+	 * @return y
 	 */
 	public double getY() {
 		return y;
@@ -72,7 +72,7 @@ public class Vector {
 
 	/**
 	 *
-	 * @param y
+	 * @param y y
 	 */
 	public void setY(double y) {
 		this.y = y;
@@ -80,7 +80,7 @@ public class Vector {
 
 	/**
 	 *
-	 * @return
+	 * @return z
 	 */
 	public double getZ() {
 		return z;
@@ -88,7 +88,7 @@ public class Vector {
 
 	/**
 	 *
-	 * @param z
+	 * @param z z
 	 */
 	public void setZ(double z) {
 		this.z = z;

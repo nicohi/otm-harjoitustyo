@@ -42,3 +42,7 @@ mvn test jacoco:report
 ```
 mvn jxr:jxr checkstyle:checkstyle
 ```
+## javadoc
+```
+mvn javadoc:javadoc
+```

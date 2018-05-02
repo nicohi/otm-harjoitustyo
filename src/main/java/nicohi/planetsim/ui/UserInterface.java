@@ -42,7 +42,7 @@ public class UserInterface extends Application {
 
 	/**
 	 * main
-	 * @param args
+	 * @param args arguments
 	 */
 	public static void main(String[] args) {
         launch(args);
@@ -50,7 +50,7 @@ public class UserInterface extends Application {
 
 	/**
 	 * A button which calls this.toggleTimer() to pause and unpause the simulation
-	 * @return
+	 * @return A Pause button
 	 */
 	public Button pauseBtn() {
 		Button btn = new Button("pause/unpause");
@@ -66,8 +66,8 @@ public class UserInterface extends Application {
 	
 	/**
 	 * A box for setting x and y
-	 * @param t
-	 * @return
+	 * @param t label
+	 * @return A VBox with x and y fields and labels
 	 */
 	public VBox vectorSetBox(String t) {
 		VBox b = new VBox();
@@ -79,8 +79,8 @@ public class UserInterface extends Application {
 
 	/**
 	 * A field with a label to the left of it
-	 * @param l
-	 * @return
+	 * @param l label
+	 * @return A HBox with a label and field
 	 */
 	public HBox numericFieldAndLabel(String l) {
 		TextField txt = new TextField();
@@ -144,7 +144,7 @@ public class UserInterface extends Application {
 	
 	/**
 	 * A button to add a planet
-	 * @return
+	 * @return A button
 	 */
 	public Button addPlanetButton() {
 		Button b = new Button("add planet");
@@ -153,7 +153,7 @@ public class UserInterface extends Application {
 	
 	/**
 	 * Adds a planet to the UI
-	 * @param p
+	 * @param p planet
 	 */
 	public void addPlanet(Planet p) {
 		sim.getPlanets().add(p);
