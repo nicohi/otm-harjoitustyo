@@ -25,6 +25,10 @@ import nicohi.planetsim.simulator.Planet;
 import nicohi.planetsim.simulator.Simulator;
 import nicohi.planetsim.simulator.Vector;
 
+/**
+ *
+ * @author Nicolas Hiillos
+ */
 public class UserInterface extends Application {
 	Simulator sim;
 	StatusTimer simLoop;
@@ -36,10 +40,18 @@ public class UserInterface extends Application {
 	VBox rMenu;
 	double scale = 0.5;
 
+	/**
+	 * main
+	 * @param args
+	 */
 	public static void main(String[] args) {
         launch(args);
     }
 
+	/**
+	 * A button which calls this.toggleTimer() to pause and unpause the simulation
+	 * @return
+	 */
 	public Button pauseBtn() {
 		Button btn = new Button("pause/unpause");
 		btn.setOnAction(new EventHandler<ActionEvent>() {
@@ -52,6 +64,11 @@ public class UserInterface extends Application {
 		return btn;
 	}
 	
+	/**
+	 * A box for setting x and y
+	 * @param t
+	 * @return
+	 */
 	public VBox vectorSetBox(String t) {
 		VBox b = new VBox();
 		b.getChildren().add(new Label(t));
@@ -59,7 +76,12 @@ public class UserInterface extends Application {
 		b.getChildren().add(numericFieldAndLabel("y: "));
 		return b;
 	}
-	
+
+	/**
+	 * A field with a label to the left of it
+	 * @param l
+	 * @return
+	 */
 	public HBox numericFieldAndLabel(String l) {
 		TextField txt = new TextField();
 		// force the field to be numeric only
@@ -120,11 +142,19 @@ public class UserInterface extends Application {
 		else simLoop.start();
 	}
 	
+	/**
+	 * A button to add a planet
+	 * @return
+	 */
 	public Button addPlanetButton() {
 		Button b = new Button("add planet");
 		return b;
 	}
 	
+	/**
+	 * Adds a planet to the UI
+	 * @param p
+	 */
 	public void addPlanet(Planet p) {
 		sim.getPlanets().add(p);
 		UIPlanet pN = new UIPlanet(p);
@@ -153,11 +183,7 @@ public class UserInterface extends Application {
         BorderPane root = new BorderPane();
 
 		//right menu
-		rMenu = new VBox();
-		rMenu.getChildren().add(vectorSetBox("position"));
-		rMenu.getChildren().add(vectorSetBox("velocity"));
-		rMenu.getChildren().add(numericFieldAndLabel("mass: "));
-		rMenu.getChildren().add(addPlanetButton());
+		rMenu = new PlanetAddMenu(this);
 
 		//test circle
 		Circle circle = new Circle(50, Color.BLUE);
@@ -189,7 +215,17 @@ public class UserInterface extends Application {
 }
 
 class PlanetAddMenu extends VBox {
-	
+	UserInterface ui;
+
+	public PlanetAddMenu(UserInterface ui) {
+		super();
+		this.ui = ui;
+		this.getChildren().add(ui.vectorSetBox("position"));
+		this.getChildren().add(ui.vectorSetBox("velocity"));
+		this.getChildren().add(ui.numericFieldAndLabel("mass: "));
+		this.getChildren().add(ui.addPlanetButton());
+	}
+		
 }
 
 abstract class StatusTimer extends AnimationTimer {

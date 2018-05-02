@@ -3,6 +3,10 @@ package nicohi.planetsim.simulator;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ *
+ * @author Nicolas Hiillos
+ */
 public class Planet {
 	String name;
     double m;
@@ -11,7 +15,11 @@ public class Planet {
 	Vector netF;
 	Vector acc;
 
-    public Planet(double m) {
+	/**
+	 * Sets velocity and position to parameterless vectors (0,0). Planet name is random
+	 * @param m
+	 */
+	public Planet(double m) {
         this.pos = new Vector();
         this.vel = new Vector();
         this.netF = new Vector();
@@ -20,7 +28,13 @@ public class Planet {
 		this.name = new RandomStringGenerator().generateString();
     }
 
-    public Planet(Vector pos, Vector vel, double m) {
+	/**
+	 * Planet name is random 
+	 * @param pos
+	 * @param m
+	 * @param vel
+	 */
+	public Planet(Vector pos, Vector vel, double m) {
         this.pos = pos;
         this.vel = vel;
         this.netF = new Vector();
@@ -29,22 +43,42 @@ public class Planet {
 		this.name = new RandomStringGenerator().generateString();
     }
 
+	/**
+	 * Calculates a radius for the planet (double) based on mass
+	 * @return
+	 */
 	public double radius() {
 		return Math.log10(m);
 	}
 
+	/**
+	 *
+	 * @param acc
+	 */
 	public void setAcc(Vector acc) {
 		this.acc = acc;
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	public Vector getAcc() {
 		return acc;
 	}
 
+	/**
+	 *
+	 * @param netF
+	 */
 	public void setNetF(Vector netF) {
 		this.netF = netF;
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	public Vector getNetF() {
 		return netF;
 	}
@@ -83,38 +117,75 @@ public class Planet {
 		return "Planet{" + "name=" + name + ", m=" + m + ", pos=" + pos + ", vel=" + vel + '}';
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	public Vector getPos() {
 		return pos;
 	}
 
+	/**
+	 *
+	 * @param pos
+	 */
 	public void setPos(Vector pos) {
 		this.pos = pos;
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	public Vector getVel() {
 		return vel;
 	}
 
+	/**
+	 *
+	 * @param vel
+	 */
 	public void setVel(Vector vel) {
 		this.vel = vel;
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	public double getM() {
 		return m;
 	}
 
+	/**
+	 *
+	 * @param m
+	 */
 	public void setM(double m) {
 		this.m = m;
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 *
+	 * @param name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * Compares this planets mass to another planet
+	 * @param p2
+	 * @return 0 if masses are equal. 1 if this planet is heavier. -1 if Planet 2 is heavier
+	 */
 	public int heavier(Planet p2) {
 		return Double.compare(this.m, p2.getM());
 	}
@@ -122,7 +193,10 @@ public class Planet {
 
 
 class RandomStringGenerator {
-
+	/**
+	 * Random string using UUID
+	 * @return random alphanumeric string of length 20
+	 */
     public static String generateString() {
         String uuid = UUID.randomUUID().toString();
 		uuid = uuid.replace("-", "");

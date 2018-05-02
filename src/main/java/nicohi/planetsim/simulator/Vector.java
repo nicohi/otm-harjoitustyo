@@ -1,22 +1,41 @@
 package nicohi.planetsim.simulator;
 
+/**
+ *
+ * @author Nicolas Hiillos
+ */
 public class Vector {
     double x;
     double y;
     double z;
 
-    public Vector() {
+	/**
+	 * Creates new vector (0,0,0)
+	 */
+	public Vector() {
         this.x = 0;
         this.y = 0;
         this.z = 0;
     }
-    public Vector(double x, double y) {
+
+	/**
+	 * Creates new vector (x,y,0)
+	 * @param x
+	 * @param y
+	 */
+	public Vector(double x, double y) {
         this.x = x;
         this.y = y;
         this.z = 0;
     }
 
-    public Vector(double x, double y, double z) {
+	/**
+	 * Creates new vector (x,y,z)
+	 * @param x
+	 * @param y
+	 * @param z
+	 */
+	public Vector(double x, double y, double z) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -27,31 +46,50 @@ public class Vector {
 		return "Vector{" + "x=" + x + ", y=" + y + ", z=" + z + '}';
 	}
 
-
-//	public double getMag() {
-//		return Math.abs(Math.pow(Math.pow(x, 2) + Math.pow(y, 2) + Math.pow(z, 2), 1.0 / 2));
-//	}
-
+	/**
+	 *
+	 * @return
+	 */
 	public double getX() {
 		return x;
 	}
 
+	/**
+	 *
+	 * @param x
+	 */
 	public void setX(double x) {
 		this.x = x;
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	public double getY() {
 		return y;
 	}
 
+	/**
+	 *
+	 * @param y
+	 */
 	public void setY(double y) {
 		this.y = y;
 	}
 
+	/**
+	 *
+	 * @return
+	 */
 	public double getZ() {
 		return z;
 	}
 
+	/**
+	 *
+	 * @param z
+	 */
 	public void setZ(double z) {
 		this.z = z;
 	}
