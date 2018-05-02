@@ -9,4 +9,5 @@
 | 17.4. | 7 | lisää vk4 asioita |
 | 24.4. | 3 | korjauksia ja testikattavuutta |
 | 24.4. | 2 | käyttöliittymä pause nappi, osa planeetan lisäykseen liittyvää käyttöliittymää |
+| 02.5. | 6 | javadoc, simulaattorin korjaaminen, käyttöliittymäkoodin parannus |
 | yht   | 25  | | 
