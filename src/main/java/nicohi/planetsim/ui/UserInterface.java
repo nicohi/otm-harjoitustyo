@@ -34,6 +34,7 @@ public class UserInterface extends Application {
 	int height = 900;
 	Pane canvas;
 	VBox rMenu;
+	double scale = 0.5;
 
 	public static void main(String[] args) {
         launch(args);
@@ -99,7 +100,7 @@ public class UserInterface extends Application {
 					canvas.getChildren().stream().filter(c -> c instanceof UIPlanet)
 							.map(p -> (UIPlanet) p)
 							.forEach(p -> {
-								p.resetPos(xCenter, yCenter, 10000);
+								p.resetPos(xCenter, yCenter, scale);
 							});
 					prev = now;
 				}	
@@ -139,10 +140,9 @@ public class UserInterface extends Application {
         canvas = new Pane();
 
 		this.sim = new Simulator();
-		//sim.getPlanets().add(new Planet(10000000000.0));
 		addPlanet(new Planet(100000000000.0));
-		addPlanet(new Planet(new Vector(100,0), new Vector(0, 0.3), 1000000000.0));
-		addPlanet(new Planet(new Vector(120,0), new Vector(0, 0.23), 1000000.0));
+		addPlanet(new Planet(new Vector(400,0), new Vector(0, 0.134), 1000000000.0));
+		addPlanet(new Planet(new Vector(400,40), new Vector(0.033, 0.134), 1000.0));
 		//sim.getPlanets().add(new Planet(new Vector(100, 0), new Vector(0, -0.5), 1000000));
 		//addPlanet(new Planet(new Vector(100, 0), new Vector(0, -0.5), 100000));
 		//sim.getPlanets().add(new Planet(new Vector(150, 30), new Vector(0, -0.8), 1000000000));
@@ -249,6 +249,7 @@ class UIPlanet extends Circle {
 	UIVector v;
 	UIVector a;
 	UIVector f;
+	double scale;
 
 	public UIPlanet(Planet p) {
 		super(p.radius(), Color.CRIMSON);
@@ -258,6 +259,7 @@ class UIPlanet extends Circle {
 		this.v = new UIVector(p.getVel());
 		this.a = new UIVector(p.getAcc());
 		this.f = new UIVector(p.getNetF());
+		this.scale = 1;
 	}
 
 	public UIPlanet(Planet p, double radius) {
@@ -268,8 +270,9 @@ class UIPlanet extends Circle {
 	}
 
 	public void resetPos(double centerX, double centerY, double scale) {
-		double x = p.getPos().getX() + centerX;
-		double y = p.getPos().getY() + centerY;
+		this.scale = scale;
+		double x = p.getPos().getX() * scale + centerX;
+		double y = p.getPos().getY() * scale + centerY;
 		this.setCenterX(x);
 		this.setCenterY(y);
 
@@ -280,7 +283,7 @@ class UIPlanet extends Circle {
 		this.a.resetPos(x, y, 10000);
 
 		this.f.setV(this.p.getNetF());
-		this.f.resetPos(x, y, 0.001);
+		this.f.resetPos(x, y, 10000.0);
 	}
 
 	public UIVector getA() {
