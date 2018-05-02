@@ -15,7 +15,7 @@ Planeettojen kiihtyvyydet ja liikkumiset lasketaan samaan aikaan jollain aikavä
 
 # ohjeita
 ## lataaminen ja suorittaminen
-Joko lataa ja suorita [uusin jar tiedosto](releases/) komenolla
+Joko lataa ja suorita [uusin jar tiedosto](https://github.com/nicohi/otm-harjoitustyo/releases/) komenolla
 ```
 java -jar planetsim.jar
 ```
