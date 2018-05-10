@@ -8,12 +8,15 @@ import java.util.UUID;
  * @author Nicolas Hiillos
  */
 public class Planet {
-	String name;
-    double m;
-    Vector pos;
-    Vector vel;
-	Vector netF;
-	Vector acc;
+	private String name;
+    private double m;
+    private Vector pos;
+    private Vector vel;
+	private Vector netF;
+	private Vector acc;
+	private double r;
+	private boolean delete = false;
+	private Planet collided;
 
 	/**
 	 * Sets velocity and position to parameterless vectors (0,0). Planet name is random
@@ -25,6 +28,7 @@ public class Planet {
         this.netF = new Vector();
         this.acc = new Vector();
 		this.m = m;
+		this.r = Math.log10(m);
 		this.name = new RandomStringGenerator().generateString();
     }
 
@@ -40,6 +44,7 @@ public class Planet {
         this.netF = new Vector();
         this.acc = new Vector();
 		this.m = m;
+		this.r = Math.log10(m);
 		this.name = new RandomStringGenerator().generateString();
     }
 
@@ -48,7 +53,23 @@ public class Planet {
 	 * @return radius
 	 */
 	public double radius() {
-		return Math.log10(m);
+		return Math.log10(m) / 1.5;
+	}
+
+	public void setR(double r) {
+		this.r = r;
+	}
+
+	public double getR() {
+		return r;
+	}
+
+	public boolean isDelete() {
+		return delete;
+	}
+
+	public void setDelete(boolean delete) {
+		this.delete = delete;
 	}
 
 	/**
@@ -73,6 +94,14 @@ public class Planet {
 	 */
 	public void setNetF(Vector netF) {
 		this.netF = netF;
+	}
+
+	public Planet getCollided() {
+		return collided;
+	}
+
+	public void setCollided(Planet collided) {
+		this.collided = collided;
 	}
 
 	/**

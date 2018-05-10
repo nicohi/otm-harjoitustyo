@@ -28,13 +28,31 @@ public class Physics {
 		double p2Y = p2.getPos().getY();
 		double p2Z = p2.getPos().getZ();
 
-		//3D pythagoras 
-		double d = Math.pow(Math.pow((p1X - p2X), 2) + Math.pow((p1Y - p2Y), 2) + Math.pow((p1Z - p2Z), 2), 1.0 / 2);
-		//-1 for 
+		double d = distance(p1, p2);
 		double fieldStr = (bigG * p1.getM() * p2.getM()) / (d * d);
 		//double fieldStr = (bigG * p1.getM() * p2.getM())/(d*d);
 		
 		return vectorScalarProduct(fieldStr, unitVector(new Vector(p2X - p1X, p2Y - p1Y, p2Z - p1Z)));
+	}
+
+	/**
+	 * Computes distance between 2 planets
+	 * @param p1
+	 * @param p2
+	 * @return distance as a double
+	 */
+	public double distance(Planet p1, Planet p2) {
+		//planet1 coords
+		double p1X = p1.getPos().getX();
+		double p1Y = p1.getPos().getY();
+		double p1Z = p1.getPos().getZ();
+		//planet2 coords
+		double p2X = p2.getPos().getX();
+		double p2Y = p2.getPos().getY();
+		double p2Z = p2.getPos().getZ();
+
+		//3D pythagoras 
+		return Math.pow(Math.pow((p1X - p2X), 2) + Math.pow((p1Y - p2Y), 2) + Math.pow((p1Z - p2Z), 2), 1.0 / 2);
 	}
 
 	/**
@@ -49,6 +67,13 @@ public class Physics {
 				s * v.getZ());
 	}
 
+	public double magnitude(Vector v1) {
+		double p1X = v1.getX();
+		double p1Y = v1.getY();
+		double p1Z = v1.getZ();
+		return Math.abs(Math.pow(Math.pow(p1X, 2) + Math.pow(p1Y, 2) + Math.pow(p1Z, 2), 1.0 / 2));
+	}
+
 	/**
 	 *
 	 * @param v1 vector
@@ -58,9 +83,28 @@ public class Physics {
 		double p1X = v1.getX();
 		double p1Y = v1.getY();
 		double p1Z = v1.getZ();
-
-		double mag = Math.abs(Math.pow(Math.pow(p1X, 2) + Math.pow(p1Y, 2) + Math.pow(p1Z, 2), 1.0 / 2));
+		double mag = magnitude(v1);
 		return new Vector(p1X / mag, p1Y / mag, p1Z / mag);
+	}
+
+	public Vector collisionVelocity(Planet p1, Planet p2) {
+		//planet1 velocity comps
+		double v1X = p1.getVel().getX();
+		double v1Y = p1.getVel().getY();
+		double v1Z = p1.getVel().getZ();
+		//planet2 velocity comps
+		double v2X = p2.getVel().getX();
+		double v2Y = p2.getVel().getY();
+		double v2Z = p2.getVel().getZ();
+
+		//p = mv
+		double p1X = p1.getM() * v1X + p2.getM() * v2X;
+		double p1Y = p1.getM() * v1Y + p2.getM() * v2Y;
+		double p1Z = p1.getM() * v1Z + p2.getM() * v2Z;
+
+		double mTot = p1.getM() + p2.getM();
+
+		return new Vector(p1X / mTot, p1Y / mTot, p1Z / mTot);
 	}
 
 	/**

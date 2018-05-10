@@ -45,7 +45,7 @@ public class PlanetTest {
 	@Test
 	public void testRadius() {
 		Planet pN = new Planet(10);
-		assertEquals(1, pN.radius(), 0.2);
+		assertEquals(0.66, pN.radius(), 0.2);
 	}
 
 	@Test

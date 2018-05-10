@@ -2,12 +2,17 @@ package nicohi.planetsim.ui;
 
 import com.sun.javafx.scene.control.skin.DatePickerContent;
 import com.sun.scenario.Settings;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.stream.Collectors;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -18,6 +23,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
@@ -34,11 +40,12 @@ public class UserInterface extends Application {
 	StatusTimer simLoop;
 	long prev = 0;
 	Scene scene;
-	int width = 900;
+	int width = 1000;
 	int height = 900;
 	Pane canvas;
 	VBox rMenu;
-	double scale = 0.5;
+	double scale = 0.4;
+	double zDist = 300;
 
 	/**
 	 * main
@@ -106,24 +113,33 @@ public class UserInterface extends Application {
             public void handle(long now) {
 				if (now - prev >= 10000000) {
 					sim.tick();
+
+					//remove nonexisting planets (resulting from collisions)
+					updateWithSim();
+					sortBasedOnZ();
+
 					UIPlanet mMax = canvas.getChildren().stream()
 							.filter(c -> c instanceof UIPlanet)
 							.map(p -> (UIPlanet) p)
 							.max((p1, p2) -> p1.getP().heavier(p2.getP()))
 							.orElse(new UIPlanet(new Planet(1)));
+					//System.out.println(mMax.p.getM());
 
-					double xCenter = (width / 2) - mMax.getP().getPos().getX();
-					double yCenter = (height / 2) - mMax.getP().getPos().getY();
+					//set colour of central planet
+					mMax.setFill(Paint.valueOf(Color.DARKORANGE.toString()));
+					//System.out.println(mMax.p);
 
-					//test
-					//double xCenter = 250;
-					//double yCenter = 250;
-					//System.out.println(mMax.getP().getM());
+					double xCenter = mMax.getP().getPos().getX() * scale + (width / 2);
+					double yCenter = mMax.getP().getPos().getY() * scale + (height / 2);
+					double zCenter = zDist + mMax.getP().getPos().getZ();
+
+					//System.out.println("x: " + xCenter + " y: " + yCenter);
 					canvas.getChildren().stream().filter(c -> c instanceof UIPlanet)
 							.map(p -> (UIPlanet) p)
 							.forEach(p -> {
-								p.resetPos(xCenter, yCenter, scale);
+								p.resetPos(xCenter, yCenter, zCenter, scale);
 							});
+
 					prev = now;
 				}	
             }
@@ -132,6 +148,16 @@ public class UserInterface extends Application {
         simLoop.start();
 
     }
+
+	private void updateWithSim() {
+		//ArrayList<UIPlanet> delete = canvas.getChildren().stream().filter(c -> c instanceof UIPlanet)
+				//.map(p -> (UIPlanet) p)
+				//.filter(p -> !sim.getPlanets().contains(p.p))
+				//.collect(Collectors.toCollection(ArrayList<UIPlanet>::new));
+		//delete.stream().forEach(p -> canvas.getChildren().remove(p));
+		canvas.getChildren().clear();
+		sim.getPlanets().stream().forEach(p -> addPlanetToUI(p));
+	}
 
 	private void stopTimer() {
 		simLoop.stop();
@@ -151,17 +177,34 @@ public class UserInterface extends Application {
 		return b;
 	}
 	
-	/**
-	 * Adds a planet to the UI
-	 * @param p planet
-	 */
-	public void addPlanet(Planet p) {
-		sim.getPlanets().add(p);
+	public void sortBasedOnZ() {
+		Comparator<Node> comparator = (p1, p2) -> {
+			if (p1 instanceof UIPlanet && p2 instanceof UIPlanet) {
+				System.out.println("sus");
+				UIPlanet up1 = (UIPlanet) p1;
+				UIPlanet up2 = (UIPlanet) p2;
+				return Double.compare(up1.p.getPos().getZ(), up2.p.getPos().getZ());
+			} else {
+				return -1;
+			}
+		};
+		FXCollections.sort(canvas.getChildren(), comparator);
+	}
+	
+	public void addPlanetToUI(Planet p) {
 		UIPlanet pN = new UIPlanet(p);
 		canvas.getChildren().add(pN);
 		//canvas.getChildren().addAll(pN.getA(), pN.getF(), pN.getV());
 		canvas.getChildren().addAll(pN.getV());
-		canvas.getChildren().addAll(pN.getA());
+		//canvas.getChildren().addAll(pN.getA());
+	}
+	/**
+	 * Adds a planet to the UI and sim
+	 * @param p planet
+	 */
+	public void addPlanet(Planet p) {
+		sim.getPlanets().add(p);
+		addPlanetToUI(p);
 	}
 
     @Override
@@ -171,8 +214,11 @@ public class UserInterface extends Application {
 
 		this.sim = new Simulator();
 		addPlanet(new Planet(100000000000.0));
+		//addPlanet(new Planet(new Vector(100, 0), new Vector(0, 0.3, 0), 10000000000.0));
+		addPlanet(new Planet(new Vector(-300,100), new Vector(0, 0, 0.154), 1000000000.0));
 		addPlanet(new Planet(new Vector(400,0), new Vector(0, 0.134), 1000000000.0));
-		addPlanet(new Planet(new Vector(400,40), new Vector(0.033, 0.134), 1000.0));
+		addPlanet(new Planet(new Vector(-400,0), new Vector(0, -0.134), 10000000000.0));
+		//addPlanet(new Planet(new Vector(400,40), new Vector(0.033, 0.134), 1000.0));
 		//sim.getPlanets().add(new Planet(new Vector(100, 0), new Vector(0, -0.5), 1000000));
 		//addPlanet(new Planet(new Vector(100, 0), new Vector(0, -0.5), 100000));
 		//sim.getPlanets().add(new Planet(new Vector(150, 30), new Vector(0, -0.8), 1000000000));
@@ -187,7 +233,8 @@ public class UserInterface extends Application {
 
 		//test circle
 		Circle circle = new Circle(50, Color.BLUE);
-		circle.relocate(200, 200);
+		circle.relocate(500, 500);
+		//canvas.getChildren().add(circle);
 
 		//this.sim.getPlanets().forEach(p -> {
 			//UIPlanet pN = new UIPlanet(p);
@@ -305,12 +352,21 @@ class UIPlanet extends Circle {
 		this.p = p;
 	}
 
-	public void resetPos(double centerX, double centerY, double scale) {
+	public void resetPos(double centerX, double centerY, double centerZ, double scale) {
 		this.scale = scale;
-		double x = p.getPos().getX() * scale + centerX;
-		double y = p.getPos().getY() * scale + centerY;
+		this.radiusProperty().set(p.radius());
+		double x = -1 * (p.getPos().getX() * scale) + centerX;
+		double y = -1 * (p.getPos().getY() * scale) + centerY;
+
+		double zScale = ((p.getPos().getZ() + centerZ) / centerZ);
+		//if too close
+		if (zScale * p.getPos().getZ() > centerZ) this.opacityProperty().set(0.5);
+
 		this.setCenterX(x);
 		this.setCenterY(y);
+
+		//scale based on z
+		this.radiusProperty().set(this.radiusProperty().multiply(zScale).doubleValue());
 
 		this.v.setV(this.p.getVel());
 		this.v.resetPos(x, y, 100);
