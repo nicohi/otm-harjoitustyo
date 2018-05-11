@@ -95,7 +95,7 @@ public class PlanetDB {
 				System.out.println("Problem with creating connection");
 			}
 		}  catch (Exception e) {
-			e.printStackTrace(System.out);
+			System.out.println(e);
 		}
 	}
 
