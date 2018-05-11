@@ -3,7 +3,7 @@ Ohjelma näyttää planeettoja ja niiden liikkeitä graafisesti.
 
 ## Toiminallisuudet
 ### Fysiikka
-- planeetat liikkuvat [Newtonin lakien](https://en.wikipedia.org/wiki/Newton%27s_law_of_universal_gravitation) mukaan.
+- planeetat liikkuvat [Newtonin painovoimalain](https://fi.wikipedia.org/wiki/Painovoima#Newtonin_laki_vetovoimasta) mukaan.
 - törmäykset mallinnetaan ja noudattavat liikemäärän säilymislakia
 - planeetat simuloidaan kolmiulotteisilla vektoreilla
 - liian suurella aikavälillä simulaatio on epätarkka (planeetat liikkuvat oudosti tai toistensa läpi)
