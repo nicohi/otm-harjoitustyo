@@ -1,6 +1,6 @@
 # planetsim
-Javalla ohjelmoitu [n-kappale](https://en.wikipedia.org/wiki/N-body_simulation) simulaattori. 
-Painovoima on mallinnettu mahdollisimman realistisesti. 
+Javalla ohjelmoitu [n-kappale](https://en.wikipedia.org/wiki/N-body_simulation) simulaattori painovoimalle ja planeetoille. 
+Fysiikka on mallinnettu mahdollisimman realistisesti. 
 Planeettojen kiihtyvyydet ja liikkumiset lasketaan samaan aikaan jollain aikavälillä.
 
 Vaatii: java ja javafx
