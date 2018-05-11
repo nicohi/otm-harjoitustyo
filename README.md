@@ -8,6 +8,8 @@ Vaatimukset: java ja javafx
 ## linkkejä
 [uusin release](https://github.com/nicohi/otm-harjoitustyo/releases/)
 
+[käyttöohje](dokumentaatio/kayttoohje.md)
+
 [määrittely](dokumentaatio/outline.md)
 
 [työaikakirjanpito](dokumentaatio/tyoaikakirjanpito.md)

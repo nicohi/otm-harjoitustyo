@@ -24,18 +24,25 @@ public class PlanetDB {
 	private Server server;
 	private boolean running = false;
 
+	/**
+	 * Constructor for planetdb
+	 * @param path
+	 */
 	public PlanetDB (String path) {
 		properties = new HsqlProperties();
 		properties.setProperty("index", 0);
 		properties.setProperty("id", 0);
 		properties.setProperty("server.database.0", path + "planetdb");
 		properties.setProperty("server.dbname.0", "planetdb");
-		start();
+		startServer();
 		connect();
-		init();
+		initDB();
 	}
 
-	public void init() {
+	/**
+	 * initializes database with table "Planet"
+	 */
+	public void initDB() {
 		try {
 			PreparedStatement stmt = con.prepareStatement("CREATE TABLE Planet (name varchar(20), mass double, posX double, posY double, posZ double, velX double, velY double, velZ double);");
 			stmt.execute();
@@ -45,7 +52,10 @@ public class PlanetDB {
 		}
 	}
 
-	public void start() {
+	/**
+	 * Starts HSQL server
+	 */
+	public void startServer() {
 		if (server == null) {
 			System.out.println("Starting HSQL server...");
 			server = new Server();
@@ -65,10 +75,16 @@ public class PlanetDB {
 		}
 	}
 
+	/**
+	 * Stops HSQL server
+	 */
 	public void stop() {
 		server.shutdownCatalogs(1);
 	}
 
+	/**
+	 * Creates connection con to HSQL server for PlanetDB
+	 */
 	public void connect() {
 		try {
 			Class.forName("org.hsqldb.jdbc.JDBCDriver");
@@ -83,6 +99,10 @@ public class PlanetDB {
 		}
 	}
 
+	/**
+	 * Save planets to DB
+	 * @param ps ArrayList of planets to be saved
+	 */
 	public void save(ArrayList<Planet> ps) {
 		ps.stream().forEach(p -> {
 			try {
@@ -106,6 +126,9 @@ public class PlanetDB {
 		});
 	}
 
+	/**
+	 * Deletes everything in table Planet
+	 */
 	public void clear() {
 		try {
 			PreparedStatement stmt = con.prepareStatement("DELETE FROM Planet WHERE true");
@@ -116,6 +139,10 @@ public class PlanetDB {
 
 	}
 
+	/**
+	 * Fetches planets from DB
+	 * @return ArrayList of planets from DB
+	 */
 	public ArrayList<Planet> load() {
 		ArrayList<Planet> ps = new ArrayList<>();
 		try {

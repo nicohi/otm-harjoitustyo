@@ -61,6 +61,9 @@ public class UserInterface extends Application {
         launch(args);
     }
 	
+	/**
+	 * Save planets of sim to db
+	 */
 	public void saveToDB() {
 		PlanetDB db = new PlanetDB(System.getProperty("user.dir") + "/planetdb/");
 		db.clear();
@@ -68,12 +71,19 @@ public class UserInterface extends Application {
 		db.stop();
 	}
 
+	/**
+	 * Load planets from db and replace planets in sim
+	 */
 	public void loadFromDB() {
 		PlanetDB db = new PlanetDB(System.getProperty("user.dir") + "/planetdb/");
 		sim.setPlanets(db.load());
 		db.stop();
 	}
 
+	/**
+	 * Creates database operation buttons for methods saveToDB() and loadFromDB().
+	 * @return HBox with buttons
+	 */
 	public HBox dbButtons() {
 		Button save = new Button("save");
 		Button load = new Button("load");
@@ -97,6 +107,10 @@ public class UserInterface extends Application {
 		return new HBox(save, load);
 	}
 
+	/**
+	 * Creates button for toggling visibility of vectors
+	 * @return Button
+	 */
 	public Button toggleShowVectors() {
 		Button btn = new Button("toggle vectors");
 		btn.setOnAction(new EventHandler<ActionEvent>() {
@@ -132,6 +146,9 @@ public class UserInterface extends Application {
 	/**
 	 * A box for setting x and y
 	 * @param t label
+	 * @param defX
+	 * @param defY
+	 * @param defZ
 	 * @return A VBox with x and y fields and labels
 	 */
 	public VBox vectorSetBox(String t, String defX, String defY, String defZ) {
@@ -146,6 +163,7 @@ public class UserInterface extends Application {
 	/**
 	 * A field with a label to the left of it
 	 * @param l label
+	 * @param d
 	 * @return A HBox with a label and field
 	 */
 	public HBox numericFieldAndLabel(String l, String d) {
@@ -232,6 +250,10 @@ public class UserInterface extends Application {
 		else simLoop.start();
 	}
 	
+	/**
+	 * Creates bottom bar for UI with pausebutton, time slider, and scale slider.
+	 * @return HBox with buttons, labels, and sliders
+	 */
 	public HBox bottomBar() {
 		Slider time = new Slider();
 		time.setMin(0.1);
@@ -291,19 +313,26 @@ public class UserInterface extends Application {
 		return b;
 	}
 	
+	/**
+	 * Sorts nodes based on ScaleX
+	 */
 	public void sortBasedOnZ() {
 		Comparator<Node> comparator = (p1, p2) -> {
-			try {
-				UIPlanet up1 = (UIPlanet) p1;
-				UIPlanet up2 = (UIPlanet) p2;
-				return Double.compare(up1.getScaleX(), up2.getScaleX());
-			} catch (Exception e) {
-				return Double.compare(p1.getScaleX(), p2.getScaleX());
-			}
+			//try {
+				//UIPlanet up1 = (UIPlanet) p1;
+				//UIPlanet up2 = (UIPlanet) p2;
+				//return Double.compare(up1.getScaleX(), up2.getScaleX());
+			//} catch (Exception e) {
+			return Double.compare(p1.getScaleX(), p2.getScaleX());
+			//}
 		};
 		FXCollections.sort(canvasP.getChildren(), comparator);
 	}
 	
+	/**
+	 * Adds a planet to canvasP (makes it visible) and V and A vectors of the planet.
+	 * @param p
+	 */
 	public void addPlanetToUI(Planet p) {
 		UIPlanet pN = new UIPlanet(p);
 		canvasP.getChildren().add(pN);
@@ -313,6 +342,7 @@ public class UserInterface extends Application {
 			canvasV.getChildren().addAll(pN.getA());
 		}
 	}
+
 	/**
 	 * Adds a planet to the UI and sim
 	 * @param p planet
@@ -322,7 +352,11 @@ public class UserInterface extends Application {
 		addPlanetToUI(p);
 	}
 
-	public Button clearPlanets() {
+	/**
+	 * Button which removes all planets from sim
+	 * @return Button
+	 */
+	public Button clearPlanetsButton() {
 		Button b =  new Button("clear");
 		b.setOnAction(new EventHandler<ActionEvent>() {
  
@@ -334,7 +368,7 @@ public class UserInterface extends Application {
 		return b;
 
 	}
-
+	
     @Override
     public void start(Stage primaryStage) {
 		this.sim = new Simulator();
@@ -366,7 +400,7 @@ public class UserInterface extends Application {
 		rMenu = new PlanetAddMenu(this);
 		rMenu.getChildren().add(new Label(""));
 		rMenu.getChildren().add(new Label("general: "));
-		rMenu.getChildren().add(clearPlanets());
+		rMenu.getChildren().add(clearPlanetsButton());
 		rMenu.getChildren().add(toggleShowVectors());
 		rMenu.getChildren().add(new Label("database: "));
 		rMenu.getChildren().add(dbButtons());
