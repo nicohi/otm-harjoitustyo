@@ -13,6 +13,7 @@ Sovelluksen pitäisi näyttää tältä käynnistyttyään
 ![kl](kliittyma.png?raw=true)
 
 - Planeettoja voi lisätä painamalla "add planet". Planeetta lisätään paramatreillä jotka lukevat tekstikentissä. Parametrejä voi muuttaa.
+- nopeus on m/s, massa on kg, paikka on m
 - Painamalla "save" sovellus tallentaa tämänhetkisen tilan tietokantaan "planetdb" **siihen polkuun mistä ohjelma on käynnistetty**. "load" lataa tilan samasta tietokannasta.
 - "time" ja "scale" muuttavat simulaation aikaväliä ja 'zoomia'
 - "unpause/pause" pysäyttää ja käynnistää simulaation. HUOM pause:in aikana tekemäsi muutokset näkyvät vasta unpaus:in jälkeen
