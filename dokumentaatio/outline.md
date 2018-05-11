@@ -10,3 +10,4 @@ Ohjelma näyttää planeettoja ja niiden liikkeitä graafisesti.
 - planeettojen törmäys mallinnetaan (voivat kulkea toistensa läpi jos simulaation nopeus asetettu liian korkeaksi)
 - kaikki planeetat voidaan poistaa
 - planeetat voidaan tallentaa ja ladata tietokannasta (HSQLDB)
+- painavin planeetta on keskimmäinen
