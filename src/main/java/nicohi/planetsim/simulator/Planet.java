@@ -63,7 +63,7 @@ public class Planet {
 	 * @return radius
 	 */
 	public double radius() {
-		return Math.log10(m) / 1.5;
+		return Math.log10(m) / 1.2;
 	}
 
 	public void setR(double r) {

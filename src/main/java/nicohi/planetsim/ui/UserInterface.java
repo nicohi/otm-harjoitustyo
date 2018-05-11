@@ -42,7 +42,7 @@ public class UserInterface extends Application {
 	StatusTimer simLoop;
 	long prev = 0;
 	Scene scene;
-	int width = 900;
+	int width = 1200;
 	int height = 1000;
 	Pane canvasP;
 	Pane canvasV;
@@ -171,7 +171,7 @@ public class UserInterface extends Application {
 
             @Override
             public void handle(long now) {
-				if (now - prev >= 10000000) {
+				if (now - prev >= 8000000) {
 					sim.setTickTime(tickTime);
 					sim.tick();
 
@@ -234,13 +234,13 @@ public class UserInterface extends Application {
 	
 	public HBox bottomBar() {
 		Slider time = new Slider();
-		time.setMin(1);
-		time.setMax(100);
-		time.setValue(20);
+		time.setMin(0.1);
+		time.setMax(60);
+		time.setValue(10);
 		time.setShowTickLabels(true);
 		time.setShowTickMarks(true);
-		time.setMajorTickUnit(50);
-		time.setMinorTickCount(5);
+		time.setMajorTickUnit(10);
+		time.setMinorTickCount(1);
 		time.setBlockIncrement(10);
 		time.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
