@@ -1,10 +1,10 @@
 # Käyttöohje
-Lataa [jar tiedosto](https://github.com/nicohi/otm-harjoitustyo/releases/).
+Lataa [jar tiedosto](https://github.com/nicohi/otm-harjoitustyo/releases/tag/ver1.0).
 
 ## Ohjelman käynnistäminen
 Ohjelma käynnistyy joko tuplaklikkaamalla .jar tiedostoa tai komenolla
 ```
-java -jar planetsim.jar
+java -jar planetsim-1.0.jar
 ```
 
 ## Yleinen Käyttö
