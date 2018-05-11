@@ -17,6 +17,8 @@ Vaatii: java ja javafx
 
 [arkkitehtuuri](dokumentaatio/arkkitehtuuri.md)
 
+[testit](dokumentaatio/testit.md)
+
 # ohjeita
 ## lataaminen ja suorittaminen
 Joko lataa ja suorita [uusin jar tiedosto](https://github.com/nicohi/otm-harjoitustyo/releases/) komenolla
