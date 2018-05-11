@@ -17,7 +17,7 @@ Vaatii: java ja javafx
 
 [arkkitehtuuri](dokumentaatio/arkkitehtuuri.md)
 
-[testit](dokumentaatio/testit.md)
+[testaus](dokumentaatio/testit.md)
 
 # ohjeita
 ## lataaminen ja suorittaminen
