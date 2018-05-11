@@ -1,5 +1,5 @@
 # Planeettasimulaatio
-Ohjelma näyttää planeettoja ja niiden liikkeitä graafisesti.
+Ohjelma mallintaa planeettoja ja niiden liikkeitä graafisesti.
 
 ## Toiminallisuudet
 ### Fysiikka
