@@ -402,6 +402,7 @@ public class UserInterface extends Application {
 		rMenu.getChildren().add(new Label("general: "));
 		rMenu.getChildren().add(clearPlanetsButton());
 		rMenu.getChildren().add(toggleShowVectors());
+		rMenu.getChildren().add(new Label(""));
 		rMenu.getChildren().add(new Label("database: "));
 		rMenu.getChildren().add(dbButtons());
 
