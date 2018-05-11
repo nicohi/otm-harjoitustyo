@@ -23,7 +23,7 @@ Vaatii: java ja javafx
 ## lataaminen ja suorittaminen
 Joko lataa ja suorita [uusin jar tiedosto](https://github.com/nicohi/otm-harjoitustyo/releases/) komenolla
 ```
-java -jar planetsim.jar
+java -jar planetsim-1.0.jar
 ```
 tai jos haluat kasata itse lähdekoodista
 ```
