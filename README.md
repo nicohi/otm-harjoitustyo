@@ -3,6 +3,7 @@ Javalla ohjelmoitu [n-kappale](https://en.wikipedia.org/wiki/N-body_simulation) 
 Painovoima on mallinnettu mahdollisimman realistisesti. 
 Planeettojen kiihtyvyydet ja liikkumiset lasketaan samaan aikaan jollain aikavälillä.
 
+Vaatimukset: java ja javafx
 
 ## linkkejä
 [uusin release](https://github.com/nicohi/otm-harjoitustyo/releases/)

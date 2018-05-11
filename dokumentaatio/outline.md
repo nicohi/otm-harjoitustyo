@@ -1,14 +1,12 @@
 # Planeettasimulaatio
 Ohjelma näyttää planeettoja ja niiden liikkeitä graafisesti.
 
-## suunnitellut toiminallisuudet
-### perusasiat
+## toiminallisuudet
 - ohjelmaan voi lisätä planeettoja eri parametreillä (esim. massa, nopeus, sijainti)
-- planeettojen parametrejä voi muuttaa graafisessa käyttöliittymässä
 - simulaation nopeutta voi muuttaa
-- planeetat sekä niiden kiertoradat esiintyvät graafisessa käyttöliittymässä ja liikkuvat simulaation edetessä (2D)
-### jatkokehitystä
-- planeetat simuloidaan kolmessa ulottuvuudessa
-- planeetat esitetään kolmessa ulottuvuudessa
-- "kameran" keskipiste voidaan siirtää seuraamaan eri kappaleita
-- kappaleiden törmäyksen simulaatio
+- planeetat sekä niiden nopeus ja kiihtyvyys vektorit näkyvät graafisessa käyttöliittymässä 
+- planeetat simuloidaan kolmiulotteisesti
+- kolmas ulottuvuus näytetään käyttäjälle muuttamalla planeettojen kokoa ja väriä
+- planeettojen törmäys mallinnetaan (voivat kulkea toistensa läpi jos simulaation nopeus asetettu liian korkeaksi)
+- kaikki planeetat voidaan poistaa
+- planeetat voidaan tallentaa ja ladata tietokannasta (HSQLDB)
