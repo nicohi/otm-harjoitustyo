@@ -16,6 +16,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -40,12 +41,15 @@ public class UserInterface extends Application {
 	StatusTimer simLoop;
 	long prev = 0;
 	Scene scene;
-	int width = 1000;
-	int height = 900;
-	Pane canvas;
-	VBox rMenu;
+	int width = 900;
+	int height = 1000;
+	Pane canvasP;
+	Pane canvasV;
+	PlanetAddMenu rMenu;
 	double scale = 0.4;
 	double zDist = 300;
+	double tickTime = 20;
+	UIPlanet mMax;
 
 	/**
 	 * main
@@ -79,8 +83,9 @@ public class UserInterface extends Application {
 	public VBox vectorSetBox(String t) {
 		VBox b = new VBox();
 		b.getChildren().add(new Label(t));
-		b.getChildren().add(numericFieldAndLabel("x: "));
-		b.getChildren().add(numericFieldAndLabel("y: "));
+		b.getChildren().add(numericFieldAndLabel("x: ", "0.0"));
+		b.getChildren().add(numericFieldAndLabel("y: ", "0.0"));
+		b.getChildren().add(numericFieldAndLabel("z: ", "0.0"));
 		return b;
 	}
 
@@ -89,8 +94,9 @@ public class UserInterface extends Application {
 	 * @param l label
 	 * @return A HBox with a label and field
 	 */
-	public HBox numericFieldAndLabel(String l) {
+	public HBox numericFieldAndLabel(String l, String d) {
 		TextField txt = new TextField();
+		txt.setText(d);
 		// force the field to be numeric only
 		txt.textProperty().addListener(new ChangeListener<String>() {
 			@Override
@@ -112,13 +118,13 @@ public class UserInterface extends Application {
             @Override
             public void handle(long now) {
 				if (now - prev >= 10000000) {
+					sim.setTickTime(tickTime);
 					sim.tick();
 
 					//remove nonexisting planets (resulting from collisions)
 					updateWithSim();
-					sortBasedOnZ();
 
-					UIPlanet mMax = canvas.getChildren().stream()
+					mMax = canvasP.getChildren().stream()
 							.filter(c -> c instanceof UIPlanet)
 							.map(p -> (UIPlanet) p)
 							.max((p1, p2) -> p1.getP().heavier(p2.getP()))
@@ -131,14 +137,16 @@ public class UserInterface extends Application {
 
 					double xCenter = mMax.getP().getPos().getX() * scale + (width / 2);
 					double yCenter = mMax.getP().getPos().getY() * scale + (height / 2);
-					double zCenter = zDist + mMax.getP().getPos().getZ();
+					double zCenter = zDist + mMax.getP().getPos().getZ() * scale;
 
 					//System.out.println("x: " + xCenter + " y: " + yCenter);
-					canvas.getChildren().stream().filter(c -> c instanceof UIPlanet)
+					canvasP.getChildren().stream().filter(c -> c instanceof UIPlanet)
 							.map(p -> (UIPlanet) p)
 							.forEach(p -> {
 								p.resetPos(xCenter, yCenter, zCenter, scale);
 							});
+
+					sortBasedOnZ();
 
 					prev = now;
 				}	
@@ -150,12 +158,12 @@ public class UserInterface extends Application {
     }
 
 	private void updateWithSim() {
-		//ArrayList<UIPlanet> delete = canvas.getChildren().stream().filter(c -> c instanceof UIPlanet)
+		//ArrayList<UIPlanet> delete = canvasP.getChildren().stream().filter(c -> c instanceof UIPlanet)
 				//.map(p -> (UIPlanet) p)
 				//.filter(p -> !sim.getPlanets().contains(p.p))
 				//.collect(Collectors.toCollection(ArrayList<UIPlanet>::new));
-		//delete.stream().forEach(p -> canvas.getChildren().remove(p));
-		canvas.getChildren().clear();
+		//delete.stream().forEach(p -> canvasP.getChildren().remove(p));
+		canvasP.getChildren().clear();
 		sim.getPlanets().stream().forEach(p -> addPlanetToUI(p));
 	}
 
@@ -168,34 +176,83 @@ public class UserInterface extends Application {
 		else simLoop.start();
 	}
 	
+	public HBox bottomBar() {
+		Slider time = new Slider();
+		time.setMin(1);
+		time.setMax(100);
+		time.setValue(20);
+		time.setShowTickLabels(true);
+		time.setShowTickMarks(true);
+		time.setMajorTickUnit(50);
+		time.setMinorTickCount(5);
+		time.setBlockIncrement(10);
+		time.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,
+                Number old_val, Number new_val) {
+					tickTime = new_val.doubleValue();
+            }
+        });
+
+		Slider zoom = new Slider();
+		zoom.setMin(0.01);
+		zoom.setMax(1.5);
+		zoom.setValue(0.5);
+		zoom.setShowTickLabels(true);
+		zoom.setShowTickMarks(true);
+		zoom.setMajorTickUnit(0.5);
+		zoom.setMinorTickCount(10);
+		zoom.setBlockIncrement(10);
+		zoom.valueProperty().addListener(new ChangeListener<Number>() {
+            public void changed(ObservableValue<? extends Number> ov,
+                Number old_val, Number new_val) {
+					scale = new_val.doubleValue();
+            }
+        });
+
+		return new HBox(pauseBtn(), new Label(" time: "), time, new Label(" scale: "), zoom);
+	}
+	
 	/**
 	 * A button to add a planet
 	 * @return A button
 	 */
 	public Button addPlanetButton() {
 		Button b = new Button("add planet");
+		b.setOnAction(new EventHandler<ActionEvent>() {
+			@Override public void handle(ActionEvent e) {
+				//System.out.println(rMenu.getPos());
+				//System.out.println(rMenu.getVel());
+				//System.out.println(rMenu.getM());
+				Vector pos = rMenu.getPos();
+				Vector relPos = new Vector(-1 * pos.getX() + mMax.p.getPos().getX(),
+						-1 * pos.getY() + mMax.p.getPos().getY(),
+						pos.getZ() + mMax.p.getPos().getZ());
+				double m = rMenu.getM();
+				if (m == 0.0) m = 100;
+				addPlanet(new Planet(relPos, rMenu.getVel(), m));
+			}
+		});
 		return b;
 	}
 	
 	public void sortBasedOnZ() {
 		Comparator<Node> comparator = (p1, p2) -> {
-			if (p1 instanceof UIPlanet && p2 instanceof UIPlanet) {
-				System.out.println("sus");
+			try {
 				UIPlanet up1 = (UIPlanet) p1;
 				UIPlanet up2 = (UIPlanet) p2;
-				return Double.compare(up1.p.getPos().getZ(), up2.p.getPos().getZ());
-			} else {
-				return -1;
+				return Double.compare(up1.getScaleX(), up2.getScaleX());
+			} catch (Exception e) {
+				return Double.compare(p1.getScaleX(), p2.getScaleX());
 			}
 		};
-		FXCollections.sort(canvas.getChildren(), comparator);
+		FXCollections.sort(canvasP.getChildren(), comparator);
 	}
 	
 	public void addPlanetToUI(Planet p) {
 		UIPlanet pN = new UIPlanet(p);
-		canvas.getChildren().add(pN);
+		canvasP.getChildren().add(pN);
 		//canvas.getChildren().addAll(pN.getA(), pN.getF(), pN.getV());
-		canvas.getChildren().addAll(pN.getV());
+		//canvasV.getChildren().addAll(pN.getV());
 		//canvas.getChildren().addAll(pN.getA());
 	}
 	/**
@@ -210,15 +267,17 @@ public class UserInterface extends Application {
     @Override
     public void start(Stage primaryStage) {
         // layers
-        canvas = new Pane();
+        canvasP = new Pane();
+        canvasV = new Pane();
+		Pane layers = new Pane(canvasP, canvasV);
 
 		this.sim = new Simulator();
 		addPlanet(new Planet(100000000000.0));
-		//addPlanet(new Planet(new Vector(100, 0), new Vector(0, 0.3, 0), 10000000000.0));
-		addPlanet(new Planet(new Vector(-300,100), new Vector(0, 0, 0.154), 1000000000.0));
+		addPlanet(new Planet(new Vector(100, 0), new Vector(0, 0.3, 0), 1000000000.0));
+		addPlanet(new Planet(new Vector(-300,0), new Vector(0, 0, 0.154), 1000000000.0));
 		addPlanet(new Planet(new Vector(400,0), new Vector(0, 0.134), 1000000000.0));
-		addPlanet(new Planet(new Vector(-400,0), new Vector(0, -0.134), 10000000000.0));
-		//addPlanet(new Planet(new Vector(400,40), new Vector(0.033, 0.134), 1000.0));
+		addPlanet(new Planet(new Vector(400,40), new Vector(0.033, 0.134), 1000.0));
+		addPlanet(new Planet(new Vector(-400,0), new Vector(0, -0.134), 1000000000.0));
 		//sim.getPlanets().add(new Planet(new Vector(100, 0), new Vector(0, -0.5), 1000000));
 		//addPlanet(new Planet(new Vector(100, 0), new Vector(0, -0.5), 100000));
 		//sim.getPlanets().add(new Planet(new Vector(150, 30), new Vector(0, -0.8), 1000000000));
@@ -247,8 +306,9 @@ public class UserInterface extends Application {
 
         //layerPane.getChildren().addAll(playfield);
 		//canvas.getChildren().addAll(circle);
-        root.setLeft(canvas);
-		root.setBottom(pauseBtn());
+        root.setCenter(layers);
+		//root.setBottom(pauseBtn());
+		root.setBottom(bottomBar());
 
 		root.setRight(rMenu);
 		
@@ -263,14 +323,72 @@ public class UserInterface extends Application {
 
 class PlanetAddMenu extends VBox {
 	UserInterface ui;
+	VBox pos;
+	VBox vel;
+	HBox m;
 
 	public PlanetAddMenu(UserInterface ui) {
 		super();
 		this.ui = ui;
-		this.getChildren().add(ui.vectorSetBox("position"));
-		this.getChildren().add(ui.vectorSetBox("velocity"));
-		this.getChildren().add(ui.numericFieldAndLabel("mass: "));
+		this.pos = ui.vectorSetBox("position");
+		this.vel = ui.vectorSetBox("velocity");
+		this.m = ui.numericFieldAndLabel("mass: ", "1000.0");
+		this.getChildren().add(this.pos);
+		this.getChildren().add(this.vel);
+		this.getChildren().add(this.m);
 		this.getChildren().add(ui.addPlanetButton());
+	}
+
+	public double getM() {
+		try {
+			TextField mT = (TextField) m.getChildren().get(1);
+			return Double.valueOf(mT.getText());
+		} catch (Exception e) {
+			System.out.println(e);
+			return 1;
+		}
+	}
+
+	public Vector getPos() {
+		try {
+			HBox xH = (HBox) pos.getChildren().get(1);
+			TextField xT = (TextField) xH.getChildren().get(1);
+			double x = Double.valueOf(xT.getText());
+
+			HBox yH = (HBox) pos.getChildren().get(2);
+			TextField yT = (TextField) yH.getChildren().get(1);
+			double y = Double.valueOf(yT.getText());
+
+			HBox zH = (HBox) pos.getChildren().get(3);
+			TextField zT = (TextField) zH.getChildren().get(1);
+			double z = Double.valueOf(zT.getText());
+
+			return new Vector(x, y, z);
+		} catch (Exception e) {
+			System.out.println(e);
+			return new Vector();
+		}
+	}
+
+	public Vector getVel() {
+		try {
+			HBox xH = (HBox) vel.getChildren().get(1);
+			TextField xT = (TextField) xH.getChildren().get(1);
+			double x = Double.valueOf(xT.getText());
+
+			HBox yH = (HBox) vel.getChildren().get(2);
+			TextField yT = (TextField) yH.getChildren().get(1);
+			double y = Double.valueOf(yT.getText());
+
+			HBox zH = (HBox) vel.getChildren().get(3);
+			TextField zT = (TextField) zH.getChildren().get(1);
+			double z = Double.valueOf(zT.getText());
+
+			return new Vector(x, y, z);
+		} catch (Exception e) {
+			System.out.println(e);
+			return new Vector();
+		}
 	}
 		
 }
@@ -360,13 +478,16 @@ class UIPlanet extends Circle {
 
 		double zScale = ((p.getPos().getZ() + centerZ) / centerZ);
 		//if too close
-		if (zScale * p.getPos().getZ() > centerZ) this.opacityProperty().set(0.5);
+		//if (zScale * p.getPos().getZ() > centerZ) this.opacityProperty().set(0.5);
 
 		this.setCenterX(x);
 		this.setCenterY(y);
 
 		//scale based on z
-		this.radiusProperty().set(this.radiusProperty().multiply(zScale).doubleValue());
+		//this.radiusProperty().set(this.radiusProperty().multiply(zScale).doubleValue());
+		this.setScaleX(zScale);
+		this.setScaleY(zScale);
+		this.setScaleZ(zScale);
 
 		this.v.setV(this.p.getVel());
 		this.v.resetPos(x, y, 100);
