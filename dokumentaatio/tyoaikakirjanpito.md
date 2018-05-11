@@ -10,5 +10,6 @@
 | 24.4. | 3 | korjauksia ja testikattavuutta |
 | 24.4. | 2 | käyttöliittymä pause nappi, osa planeetan lisäykseen liittyvää käyttöliittymää |
 | 02.5. | 6 | javadoc, simulaattorin korjaaminen, käyttöliittymäkoodin parannus |
-| 11.5. | 9 | "3d", korjauksia, planeettojen törmäys|
-| yht   | 25  | | 
+| 10.5. | 9 | "3d", korjauksia, planeettojen törmäys|
+| 11.5. | 10 | testejä, dokumentaatiota, DB, UI-featuret |
+| yht   | 50  | | 
