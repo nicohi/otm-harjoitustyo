@@ -7,7 +7,7 @@ Vaatii: java ja javafx
 ![ex1](dokumentaatio/ex1.png?raw=true)
 
 ## linkkejä
-[uusin release](https://github.com/nicohi/otm-harjoitustyo/releases/)
+[uusin release](https://github.com/nicohi/otm-harjoitustyo/releases/tag/ver1.0)
 
 [käyttöohje](dokumentaatio/kayttoohje.md)
 
