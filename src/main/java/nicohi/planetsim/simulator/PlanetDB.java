@@ -28,7 +28,7 @@ public class PlanetDB {
 	 * Constructor for planetdb
 	 * @param path
 	 */
-	public PlanetDB (String path) {
+	public PlanetDB(String path) {
 		properties = new HsqlProperties();
 		properties.setProperty("index", 0);
 		properties.setProperty("id", 0);
@@ -89,7 +89,7 @@ public class PlanetDB {
 		try {
 			Class.forName("org.hsqldb.jdbc.JDBCDriver");
 			con = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/planetdb", "SA", "");
-			if (con!= null){
+			if (con != null) {
 				System.out.println("Connection created successfully");
 			} else {
 				System.out.println("Problem with creating connection");
@@ -148,22 +148,17 @@ public class PlanetDB {
 		try {
 			PreparedStatement stmt = con.prepareStatement("SELECT * FROM Planet");
 			ResultSet rs = stmt.executeQuery();
-
 			while (rs.next()) {
 				String n = rs.getString("name");
 				double m = rs.getDouble("mass");
-
 				double pX = rs.getDouble("posX");
 				double pY = rs.getDouble("posY");
 				double pZ = rs.getDouble("posZ");
-
 				double vX = rs.getDouble("velX");
 				double vY = rs.getDouble("velY");
 				double vZ = rs.getDouble("velZ");
-
 				ps.add(new Planet(n, m, pX, pY, pZ, vX, vY, vZ));
 			}
-
 			rs.close();
 			stmt.close();
 		} catch (Exception e) {
