@@ -32,6 +32,16 @@ public class Planet {
 		this.name = new RandomStringGenerator().generateString();
     }
 
+	public Planet(String n, double m, double pX, double pY, double pZ, double vX, double vY, double vZ) {
+        this.pos = new Vector(pX, pY, pZ);
+        this.vel = new Vector(vX, vY, vZ);
+        this.netF = new Vector();
+        this.acc = new Vector();
+		this.m = m;
+		this.r = Math.log10(m);
+		this.name = n;
+    }
+
 	/**
 	 * Planet name is random 
 	 * @param pos position

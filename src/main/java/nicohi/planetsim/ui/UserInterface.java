@@ -29,6 +29,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import nicohi.planetsim.simulator.Planet;
+import nicohi.planetsim.simulator.PlanetDB;
 import nicohi.planetsim.simulator.Simulator;
 import nicohi.planetsim.simulator.Vector;
 
@@ -50,6 +51,7 @@ public class UserInterface extends Application {
 	double zDist = 300;
 	double tickTime = 20;
 	UIPlanet mMax;
+	boolean showVectors = true;
 
 	/**
 	 * main
@@ -58,6 +60,58 @@ public class UserInterface extends Application {
 	public static void main(String[] args) {
         launch(args);
     }
+	
+	public void saveToDB() {
+		PlanetDB db = new PlanetDB(System.getProperty("user.dir") + "/planetdb/");
+		db.clear();
+		db.save(sim.getPlanets());
+		db.stop();
+	}
+
+	public void loadFromDB() {
+		PlanetDB db = new PlanetDB(System.getProperty("user.dir") + "/planetdb/");
+		sim.setPlanets(db.load());
+		db.stop();
+	}
+
+	public HBox dbButtons() {
+		Button save = new Button("save");
+		Button load = new Button("load");
+
+		save.setOnAction(new EventHandler<ActionEvent>() {
+ 
+            @Override
+            public void handle(ActionEvent event) {
+				saveToDB();
+            }
+        });
+
+		load.setOnAction(new EventHandler<ActionEvent>() {
+ 
+            @Override
+            public void handle(ActionEvent event) {
+				loadFromDB();
+            }
+        });
+
+		return new HBox(save, load);
+	}
+
+	public Button toggleShowVectors() {
+		Button btn = new Button("toggle vectors");
+		btn.setOnAction(new EventHandler<ActionEvent>() {
+ 
+            @Override
+            public void handle(ActionEvent event) {
+				if (canvasV.isVisible()) {
+					canvasV.setVisible(false);
+				} else {
+					canvasV.setVisible(true);
+				}
+            }
+        });
+		return btn;
+	}
 
 	/**
 	 * A button which calls this.toggleTimer() to pause and unpause the simulation
@@ -80,12 +134,12 @@ public class UserInterface extends Application {
 	 * @param t label
 	 * @return A VBox with x and y fields and labels
 	 */
-	public VBox vectorSetBox(String t) {
+	public VBox vectorSetBox(String t, String defX, String defY, String defZ) {
 		VBox b = new VBox();
 		b.getChildren().add(new Label(t));
-		b.getChildren().add(numericFieldAndLabel("x: ", "0.0"));
-		b.getChildren().add(numericFieldAndLabel("y: ", "0.0"));
-		b.getChildren().add(numericFieldAndLabel("z: ", "0.0"));
+		b.getChildren().add(numericFieldAndLabel("x: ", defX));
+		b.getChildren().add(numericFieldAndLabel("y: ", defY));
+		b.getChildren().add(numericFieldAndLabel("z: ", defZ));
 		return b;
 	}
 
@@ -163,7 +217,9 @@ public class UserInterface extends Application {
 				//.filter(p -> !sim.getPlanets().contains(p.p))
 				//.collect(Collectors.toCollection(ArrayList<UIPlanet>::new));
 		//delete.stream().forEach(p -> canvasP.getChildren().remove(p));
+		//load defaults
 		canvasP.getChildren().clear();
+		canvasV.getChildren().clear();
 		sim.getPlanets().stream().forEach(p -> addPlanetToUI(p));
 	}
 
@@ -252,8 +308,10 @@ public class UserInterface extends Application {
 		UIPlanet pN = new UIPlanet(p);
 		canvasP.getChildren().add(pN);
 		//canvas.getChildren().addAll(pN.getA(), pN.getF(), pN.getV());
-		//canvasV.getChildren().addAll(pN.getV());
-		//canvas.getChildren().addAll(pN.getA());
+		if (showVectors) {
+			canvasV.getChildren().addAll(pN.getV());
+			canvasV.getChildren().addAll(pN.getA());
+		}
 	}
 	/**
 	 * Adds a planet to the UI and sim
@@ -264,59 +322,73 @@ public class UserInterface extends Application {
 		addPlanetToUI(p);
 	}
 
+	public Button clearPlanets() {
+		Button b =  new Button("clear");
+		b.setOnAction(new EventHandler<ActionEvent>() {
+ 
+            @Override
+            public void handle(ActionEvent event) {
+				sim.getPlanets().clear();
+            }
+        });
+		return b;
+
+	}
+
     @Override
     public void start(Stage primaryStage) {
+		this.sim = new Simulator();
+
         // layers
         canvasP = new Pane();
         canvasV = new Pane();
 		Pane layers = new Pane(canvasP, canvasV);
 
-		this.sim = new Simulator();
-		addPlanet(new Planet(100000000000.0));
-		addPlanet(new Planet(new Vector(100, 0), new Vector(0, 0.3, 0), 1000000000.0));
-		addPlanet(new Planet(new Vector(-300,0), new Vector(0, 0, 0.154), 1000000000.0));
-		addPlanet(new Planet(new Vector(400,0), new Vector(0, 0.134), 1000000000.0));
-		addPlanet(new Planet(new Vector(400,40), new Vector(0.033, 0.134), 1000.0));
-		addPlanet(new Planet(new Vector(-400,0), new Vector(0, -0.134), 1000000000.0));
-		//sim.getPlanets().add(new Planet(new Vector(100, 0), new Vector(0, -0.5), 1000000));
-		//addPlanet(new Planet(new Vector(100, 0), new Vector(0, -0.5), 100000));
-		//sim.getPlanets().add(new Planet(new Vector(150, 30), new Vector(0, -0.8), 1000000000));
-		//addPlanet(new Planet(new Vector(150, 30), new Vector(0, -0.8), 1000000));
-		//sim.getPlanets().add(new Planet(new Vector(55, 0), new Vector(0.2, 1.6), 100000000));
+		//load default
+		if (sim.getPlanets().isEmpty()) {
+			addPlanet(new Planet(100000000000.0));
+			addPlanet(new Planet(new Vector(100, 0), new Vector(0, 0.3, 0), 1000000000.0));
+			addPlanet(new Planet(new Vector(-300,0), new Vector(0, 0, 0.154), 1000000000.0));
+			addPlanet(new Planet(new Vector(400,0), new Vector(0, 0.134), 1000000000.0));
+			addPlanet(new Planet(new Vector(400,40), new Vector(0.033, 0.134), 1000.0));
+			addPlanet(new Planet(new Vector(-400,0), new Vector(0, -0.134), 1000000000.0));
+			//sim.getPlanets().add(new Planet(new Vector(100, 0), new Vector(0, -0.5), 1000000));
+			//addPlanet(new Planet(new Vector(100, 0), new Vector(0, -0.5), 100000));
+			//sim.getPlanets().add(new Planet(new Vector(150, 30), new Vector(0, -0.8), 1000000000));
+			//addPlanet(new Planet(new Vector(150, 30), new Vector(0, -0.8), 1000000));
+			//sim.getPlanets().add(new Planet(new Vector(55, 0), new Vector(0.2, 1.6), 100000000));
+		}
 
-		// create containers
+		// create container
         BorderPane root = new BorderPane();
 
 		//right menu
 		rMenu = new PlanetAddMenu(this);
+		rMenu.getChildren().add(new Label(""));
+		rMenu.getChildren().add(new Label("general: "));
+		rMenu.getChildren().add(clearPlanets());
+		rMenu.getChildren().add(toggleShowVectors());
+		rMenu.getChildren().add(new Label("database: "));
+		rMenu.getChildren().add(dbButtons());
 
 		//test circle
 		Circle circle = new Circle(50, Color.BLUE);
 		circle.relocate(500, 500);
 		//canvas.getChildren().add(circle);
 
-		//this.sim.getPlanets().forEach(p -> {
-			//UIPlanet pN = new UIPlanet(p);
-			//canvas.getChildren().add(pN);
-			//canvas.getChildren().addAll(pN.getA(), pN.getF(), pN.getV());
-			//canvas.getChildren().addAll(pN.getV());
-			//canvas.getChildren().addAll(pN.getA());
-			//canvas.getChildren().addAll(pN.getF());
-		//});
-
-        //layerPane.getChildren().addAll(playfield);
-		//canvas.getChildren().addAll(circle);
         root.setCenter(layers);
-		//root.setBottom(pauseBtn());
 		root.setBottom(bottomBar());
 
 		root.setRight(rMenu);
 		
+		root.setStyle("-fx-background-color: #A0A0A0");
         scene = new Scene(root, width, height);
 
         primaryStage.setScene(scene);
         primaryStage.show();
-
+		
+		//saveToDB();
+		//loadFromDB();
         startSim();
     }		
 }
@@ -330,8 +402,8 @@ class PlanetAddMenu extends VBox {
 	public PlanetAddMenu(UserInterface ui) {
 		super();
 		this.ui = ui;
-		this.pos = ui.vectorSetBox("position");
-		this.vel = ui.vectorSetBox("velocity");
+		this.pos = ui.vectorSetBox("position", "300.0", "0.0", "0.0");
+		this.vel = ui.vectorSetBox("velocity", "0.0", "0.15", "0.05");
 		this.m = ui.numericFieldAndLabel("mass: ", "1000.0");
 		this.getChildren().add(this.pos);
 		this.getChildren().add(this.vel);
@@ -430,8 +502,8 @@ class UIVector extends Line {
 	public void resetPos(double x, double y, double scale) {
 		this.setStartX(x);
 		this.setStartY(y);
-		this.setEndX(x + v.getX() * scale);
-		this.setEndY(y + v.getY() * scale);
+		this.setEndX(x - v.getX() * scale);
+		this.setEndY(y - v.getY() * scale);
 	}
 
 	@Override
@@ -458,7 +530,9 @@ class UIPlanet extends Circle {
 		this.setCenterY(p.getPos().getY());
 		this.p = p;
 		this.v = new UIVector(p.getVel());
+		v.setStroke(Color.FORESTGREEN);
 		this.a = new UIVector(p.getAcc());
+		a.setStroke(Color.MAROON);
 		this.f = new UIVector(p.getNetF());
 		this.scale = 1;
 	}
@@ -479,6 +553,8 @@ class UIPlanet extends Circle {
 		double zScale = ((p.getPos().getZ() + centerZ) / centerZ);
 		//if too close
 		//if (zScale * p.getPos().getZ() > centerZ) this.opacityProperty().set(0.5);
+		//System.out.println(zScale);
+		this.setFill(Color.hsb(zScale / 2.0 * (this.p.getPos().getZ() + 270 - centerZ), 1.0, 0.8));
 
 		this.setCenterX(x);
 		this.setCenterY(y);
@@ -493,10 +569,10 @@ class UIPlanet extends Circle {
 		this.v.resetPos(x, y, 100);
 
 		this.a.setV(this.p.getAcc());
-		this.a.resetPos(x, y, 10000);
+		this.a.resetPos(x, y, 100000);
 
 		this.f.setV(this.p.getNetF());
-		this.f.resetPos(x, y, 10000.0);
+		this.f.resetPos(x, y, 0.00007);
 	}
 
 	public UIVector getA() {
@@ -511,16 +587,6 @@ class UIPlanet extends Circle {
 		return v;
 	}
 	
-//	public UIPlanet(Planet p) {
-//		this.p = p;
-//		this.c = new Circle(p.getPos().getX(), p.getPos().getY(), radius());
-//	}
-	
-//	public UIPlanet(Planet p, Circle c) {
-//		this.p = p;
-//		this.c = new Circle(p.getPos().getX(), p.getPos().getY(), radius());
-//	}
-
 	public Planet getP() {
 		return p;
 	}
