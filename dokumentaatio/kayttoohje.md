@@ -17,3 +17,5 @@ Sovelluksen pitäisi näyttää tältä käynnistyttyään
 - "time" ja "scale" muuttavat simulaation aikaväliä ja 'zoomia'
 - "unpause/pause" pysäyttää ja käynnistää simulaation. HUOM pause:in aikana tekemäsi muutokset näkyvät vasta unpaus:in jälkeen
 - "clear" poistaa kaikki planeetat (ei poista tietokannantaan säilöttyä tilaa)
+- planeettojen väri ja koko esittävät liikettä Z-suunnassa
+- "toggle vectors" laittaa vectorit pois ja takaisin päälle
