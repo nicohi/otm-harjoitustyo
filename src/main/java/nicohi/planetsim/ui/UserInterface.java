@@ -307,7 +307,9 @@ public class UserInterface extends Application {
 						pos.getZ() + mMax.p.getPos().getZ());
 				double m = rMenu.getM();
 				if (m == 0.0) m = 100;
-				addPlanet(new Planet(relPos, rMenu.getVel(), m));
+				Planet p = new Planet(relPos, rMenu.getVel(), m);
+				addPlanet(p);
+				//addPlanetToUI(p);
 			}
 		});
 		return b;
@@ -422,8 +424,6 @@ public class UserInterface extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 		
-		//saveToDB();
-		//loadFromDB();
         startSim();
     }		
 }
